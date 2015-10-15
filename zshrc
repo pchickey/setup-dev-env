@@ -35,13 +35,10 @@ alias rm='rm -v'
 alias vim='vim -p'
 alias hack='ack --type=haskell'
 
+alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
+
 topit() { /usr/bin/top -p `pgrep $1` }
 vimfind() { find -name $1 -exec vim -p {} + }
-
-# ghc switching
-use_ghc() {
-  export PATH=$1/bin:$PATH
-}
 
 if [[ $TERM == "dumb" ]] ; then
   alias ls='ls --color=none'
@@ -67,3 +64,6 @@ compdef -a _cabal cabal
 if [[ -f ~/.zsh/site-config ]]; then
   . ~/.zsh/site-config
 fi
+
+# added by travis gem
+[ -f /Users/pat/.travis/travis.sh ] && source /Users/pat/.travis/travis.sh
