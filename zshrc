@@ -67,6 +67,11 @@ compdef -a _cabal cabal
 # use the default dircolors, despite the awesome 256 color palette
 #eval `dircolors -b /etc/DIR_COLORS`
 
+# add dotfiles bin to path, if exists
+if [[ -d ~/.dotfiles/bin ]]; then
+  export PATH=$HOME/.dotfiles/bin:$PATH
+fi
+
 # load in local config, if available
 if [[ -f ~/.zsh/site-config ]]; then
   . ~/.zsh/site-config
