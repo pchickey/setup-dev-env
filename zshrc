@@ -1,3 +1,4 @@
+uname=`uname | tr A-Z a-z`
 
 # site-wide settings
 if [[ -f /etc/zshrc ]]; then
@@ -51,6 +52,12 @@ if [[ $TERM == "xterm" ]] ; then
   export TERM="xterm-256color"
 fi
 
+if [[ $uname == "darwin" ]]; then
+else
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+fi
+
 # prompt
 prompt trevor 014 blue red default yellow
 
@@ -65,5 +72,3 @@ if [[ -f ~/.zsh/site-config ]]; then
   . ~/.zsh/site-config
 fi
 
-# added by travis gem
-[ -f /Users/pat/.travis/travis.sh ] && source /Users/pat/.travis/travis.sh
