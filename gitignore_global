@@ -1,0 +1,7 @@
+.*.swp
+.*.swo
+.cabal-sandbox
+cabal.sandbox.config
+*.o
+*.pyc
+.DS_Store
