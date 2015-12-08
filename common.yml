@@ -1,5 +1,9 @@
 - hosts: all
   tasks:
+  - name: Bootstrap python-dnf
+    sudo: yes
+    raw: dnf -y install python-dnf
+
   - name: Update all packages
     sudo: yes
     dnf: name=* state=latest

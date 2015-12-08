@@ -15,6 +15,5 @@ Currently only tested against a clean Fedora 23 install. Prerequisites:
 
 - Add an SSH key to `authorized_hosts`
 - `systemctl enable sshd.service`
-- `dnf install python-dnf`
 
 Then run `ansible-playbook common.yml -l <host>`.
