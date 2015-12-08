@@ -3,6 +3,7 @@
   - name: Bootstrap python-dnf
     sudo: yes
     raw: dnf -y install python-dnf
+    when: ansible_distribution == 'Fedora'
 
   - name: Update all packages
     sudo: yes
