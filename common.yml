@@ -48,8 +48,8 @@
   - name: Create .zshrc symlink
     sudo: no
     tags: dotfiles
-    command: ln -s ~/.zsh/zshrc ~/.zshrc
-             creates=~/.zshrc
+    shell: ln -s ~/.zsh/zshrc ~/.zshrc
+           creates=~/.zshrc
 
   - name: Install vim config
     sudo: no
@@ -66,6 +66,10 @@
   - name: Create .ackrc symlink
     sudo: no
     tags: dotfiles
-    command: ln -s ~/.dotfiles/ackrc ~/.ackrc
-             creates=~/.ackrc
+    shell: ln -s ~/.dotfiles/ackrc ~/.ackrc
+           creates=~/.ackrc
 
+  - name: Configure git
+    sudo: no
+    tags: dotfiles
+    script: ./files/git_config.sh
