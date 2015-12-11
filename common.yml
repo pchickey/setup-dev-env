@@ -30,7 +30,9 @@
     sudo: no
     git:
       repo: https://github.com/pchickey/dotfiles.git
+      accept_hostkey: true
       dest: ~/.dotfiles
+      force: no
 
   - include: tasks/tmux.yml
 
@@ -39,7 +41,9 @@
     tags: dotfiles
     git:
       repo: https://github.com/pchickey/zsh-config.git
+      accept_hostkey: true
       dest: ~/.zsh
+      force: no
 
   - name: Change shell to zsh
     sudo: yes
@@ -56,7 +60,9 @@
     tags: dotfiles
     git:
       repo: https://github.com/pchickey/vim-config.git
+      accept_hostkey: true
       dest: ~/.vim
+      force: no
 
   - name: Bootstrap vim config
     sudo: no
