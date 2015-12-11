@@ -29,8 +29,7 @@
   - name: Install dotfiles
     sudo: no
     git:
-      repo: ssh://git@github.com/pchickey/dotfiles.git
-      accept_hostkey: yes
+      repo: https://github.com/pchickey/dotfiles.git
       dest: ~/.dotfiles
 
   - include: tasks/tmux.yml
@@ -39,8 +38,7 @@
     sudo: no
     tags: dotfiles
     git:
-      repo: ssh://git@github.com/pchickey/zsh-config.git
-      accept_hostkey: yes
+      repo: https://github.com/pchickey/zsh-config.git
       dest: ~/.zsh
 
   - name: Change shell to zsh
@@ -57,8 +55,7 @@
     sudo: no
     tags: dotfiles
     git:
-      repo: ssh://git@github.com/pchickey/vim-config.git
-      accept_hostkey: yes
+      repo: https://github.com/pchickey/vim-config.git
       dest: ~/.vim
 
   - name: Bootstrap vim config
