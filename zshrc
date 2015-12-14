@@ -67,6 +67,8 @@ compdef -a _cabal cabal
 # use the default dircolors, despite the awesome 256 color palette
 #eval `dircolors -b /etc/DIR_COLORS`
 
+plugins=(git ssh-agent)
+
 # add dotfiles bin to path, if exists
 if [[ -d ~/.dotfiles/bin ]]; then
   export PATH=$HOME/.dotfiles/bin:$PATH
