@@ -12,3 +12,5 @@ git config --global alias.unstage 'reset HEAD --'
 git config --global alias.co 'commit -v'
 git config --global alias.l 'log --stat'
 git config --global alias.last 'log -1 HEAD'
+git config --global diff.submodule log
+git config --global status.submodulesummary 1
