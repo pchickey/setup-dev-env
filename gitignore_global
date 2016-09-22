@@ -5,3 +5,4 @@ cabal.sandbox.config
 *.o
 *.pyc
 .DS_Store
+*.dSYM

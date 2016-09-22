@@ -23,6 +23,7 @@
 --ignore-directory=is:CMakeFiles
 --ignore-directory=is:.metadata
 --ignore-directory=is:.cabal-sandbox
+--ignore-directory=is:.stack-work
 --ignore-directory=is:dist
 --ignore-directory=is:.hpc
 --ignore-file=ext:bak
