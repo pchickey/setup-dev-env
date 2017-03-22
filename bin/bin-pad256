@@ -1,0 +1,29 @@
+#!/usr/bin/env python
+import argparse
+
+parser = argparse.ArgumentParser(description="Pad a binary file to a 256 byte boundary by appending zeroes")
+parser.add_argument("inpath", metavar="IN_FILE", type=str,
+                    help="the input file")
+parser.add_argument("outpath", metavar="OUT_FILE", type=str,
+                    help="the output file")
+
+args = parser.parse_args()
+
+def do_pad(infile, outfile):
+    indata = infile.read()
+    len_to_pad = len(indata)
+    padding_needed = align(256, len_to_pad) - len_to_pad
+    padding = '\0' * padding_needed
+
+    outfile.write(indata + padding)
+
+def align(b, n):
+    rem = n % b
+    if rem == 0:
+        return n
+    else:
+        return (n - rem) + b
+
+with open(args.inpath, 'r') as i:
+    with open(args.outpath, 'w') as o:
+        do_pad(i, o)
