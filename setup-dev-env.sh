@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 set -e
-sudo apt install vim git tmux zsh clang curl
+
+if [ "Darwin" == $(uname -s) ]; then
+	if [ ! -d /usr/local/Homebrew ]; then
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi
+	brew install vim git tmux zsh curl
+elif [ $(which apt) ]; then
+	sudo apt install vim git tmux zsh clang curl
+else
+	echo "WARNING: Cannot automatically install your packages"
+fi
+
 
 if [ ! -d "$HOME/.dotfiles" ]; then
 	git clone https://github.com/pchickey/dotfiles ~/.dotfiles
@@ -13,6 +24,11 @@ if [ ! -f "$HOME/.zshrc" ]; then
 	ln -s ~/.zsh/zshrc ~/.zshrc
 fi
 if [ ! "$SHELL" == $(which zsh) ]; then
+	if [ "Darwin" == $(uname -s) ]; then
+		echo "Adding brew installed zsh to list of acceptable shells"
+		sudo sh -c "echo '$(which zsh)' >> /etc/shells"
+	fi
+	echo "Changing login shell to zsh"
 	chsh -s $(which zsh)
 fi
 
