@@ -14,7 +14,8 @@ fi
 
 
 if [ ! -d "$HOME/.dotfiles" ]; then
-	git clone https://github.com/pchickey/dotfiles ~/.dotfiles
+	echo "Cloning private dotfiles directory. This now requires github keying to be setup"
+	git clone ssh://git@github.com:pchickey/dotfiles ~/.dotfiles
 fi
 
 if [ ! -d "$HOME/.zsh" ]; then
