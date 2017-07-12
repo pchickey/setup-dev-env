@@ -67,6 +67,14 @@ compdef -a _cabal cabal
 # use the default dircolors, despite the awesome 256 color palette
 #eval `dircolors -b /etc/DIR_COLORS`
 
+if [[ -d /usr/local/bin ]]; then
+  export PATH=/usr/local/bin:$PATH
+fi
+
+if [[ -d ~/.cargo/bin ]]; then
+  export PATH=$HOME/.cargo/bin:$PATH
+fi
+
 # add dotfiles bin to path, if exists
 if [[ -d ~/.dotfiles/bin ]]; then
   export PATH=$HOME/.dotfiles/bin:$PATH
