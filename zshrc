@@ -34,9 +34,6 @@ alias ls='ls -G -F -h'
 alias grep='grep --color=auto'
 alias rm='rm -v'
 alias vim='vim -p'
-alias hack='ack --type=haskell'
-
-alias fuck='eval $(thefuck $(fc -ln -1 | tail -n 1)); fc -R'
 
 topit() { /usr/bin/top -p `pgrep $1` }
 vimfind() { find -name $1 -exec vim -p {} + }
