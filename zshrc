@@ -70,6 +70,12 @@ fi
 
 if [[ -d ~/.cargo/bin ]]; then
   export PATH=$HOME/.cargo/bin:$PATH
+  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+  export CARGO_HOME=$HOME/.cargo
+fi
+
+if [[ -d ~/.local/bin ]]; then
+  export PATH=$HOME/.local/bin:$PATH
 fi
 
 # add dotfiles bin to path, if exists
