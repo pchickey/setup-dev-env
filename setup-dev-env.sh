@@ -19,7 +19,7 @@ if [ ! -d "$HOME/.dotfiles" ]; then
 fi
 
 if [ ! -d "$HOME/.zsh" ]; then
-	git clone https://github.com/pchickey/zsh-config ~/.zsh
+	git clone git@github.com:pchickey/zsh-config ~/.zsh
 fi
 if [ ! -f "$HOME/.zshrc" ]; then
 	ln -s ~/.zsh/zshrc ~/.zshrc
@@ -52,7 +52,7 @@ fi
 
 # Vim plugins depend on Rust stuff
 if [ ! -d "$HOME/.vim" ]; then
-	git clone https://github.com/pchickey/vim-config ~/.vim
+	git clone git@github.com:pchickey/vim-config ~/.vim
 	cd ~/.vim && ./boot.sh
 fi
 
@@ -64,7 +64,6 @@ if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
 	git config --global core.excludesfile $HOME/.dotfiles/.gitignore_global
 	git config --global color.ui true
 	git config --global log.decorate full
-	git config --global url.ssh://git@github.com:.insteadOf https://github.com
 	git config --global alias.unstage 'reset HEAD --'
 	git config --global alias.co 'commit -v'
 	git config --global alias.l 'log --stat'
