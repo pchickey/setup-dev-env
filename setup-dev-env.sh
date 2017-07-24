@@ -5,7 +5,7 @@ if [ "Darwin" == $(uname -s) ]; then
 	if [ ! -d /usr/local/Homebrew ]; then
 		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
-	brew install vim git tmux zsh curl
+	brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool
 elif [ $(which apt) ]; then
 	sudo apt install vim git tmux zsh clang curl
 else
@@ -33,10 +33,6 @@ if [ ! "$SHELL" == $(which zsh) ]; then
 	chsh -s $(which zsh)
 fi
 
-if [ ! -d "$HOME/.vim" ]; then
-	git clone https://github.com/pchickey/vim-config ~/.vim
-	cd ~/.vim && ./boot.sh
-fi
 
 if [ ! -f "$HOME/.tmux.conf" ]; then
 	ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
@@ -48,6 +44,16 @@ fi
 
 if ! which rg; then
 	$HOME/.cargo/bin/cargo install ripgrep
+fi
+
+if ! which rustfmt; then
+	$HOME/.cargo/bin/cargo install rustfmt
+fi
+
+# Vim plugins depend on Rust stuff
+if [ ! -d "$HOME/.vim" ]; then
+	git clone https://github.com/pchickey/vim-config ~/.vim
+	cd ~/.vim && ./boot.sh
 fi
 
 if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
