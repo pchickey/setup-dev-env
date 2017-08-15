@@ -7,7 +7,7 @@ if [ "Darwin" == $(uname -s) ]; then
 	fi
 	brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool
 elif [ $(which apt) ]; then
-	sudo apt install vim git tmux zsh clang curl
+	sudo apt install build-essential vim git tmux zsh clang curl cmake
 else
 	echo "WARNING: Cannot automatically install your packages"
 fi
@@ -15,11 +15,11 @@ fi
 
 if [ ! -d "$HOME/.dotfiles" ]; then
 	echo "Cloning private dotfiles directory. This now requires github keying to be setup"
-	git clone ssh://git@github.com:pchickey/dotfiles ~/.dotfiles
+	git clone ssh://git@github.com/pchickey/dotfiles ~/.dotfiles
 fi
 
 if [ ! -d "$HOME/.zsh" ]; then
-	git clone git@github.com:pchickey/zsh-config ~/.zsh
+	git clone ssh://git@github.com/pchickey/zsh-config ~/.zsh
 fi
 if [ ! -f "$HOME/.zshrc" ]; then
 	ln -s ~/.zsh/zshrc ~/.zshrc
@@ -44,15 +44,15 @@ if [ ! -f "$HOME/.ssh/rc" ]; then
 	echo "fi" >> $HOME/.ssh/rc
 fi
 
-if ! which rustc; then
+if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
 	curl https://sh.rustup.rs -sSf | sh
 fi
 
-if ! which rg; then
+if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
 	$HOME/.cargo/bin/cargo install ripgrep
 fi
 
-if ! which rustfmt; then
+if [ ! -f  "$HOME/.cargo/bin/rustfmt" ] ; then
 	$HOME/.cargo/bin/cargo install rustfmt
 fi
 
