@@ -5,9 +5,9 @@ if [ "Darwin" == $(uname -s) ]; then
 	if [ ! -d /usr/local/Homebrew ]; then
 		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
-	brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool
+	brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool ninja
 elif [ $(which apt) ]; then
-	sudo apt install build-essential vim git tmux zsh clang curl cmake
+	sudo apt install build-essential vim git tmux zsh clang curl cmake ninja-build autoconf pkg-config libevent-dev libncurses-dev
 else
 	echo "WARNING: Cannot automatically install your packages"
 fi
@@ -35,6 +35,19 @@ fi
 
 
 if [ ! -f "$HOME/.tmux.conf" ]; then
+	if [ "tmux 2.5" == $(tmux -V) ] || [ "tmux master" == $(tmux -V)] ; then
+		echo "Correct version of tmux installed, linking conf file"
+	else
+		echo "Incompatible version of tmux installed: " $(tmux -V)
+		git clone https://github.com/tmux/tmux.git
+		cd tmux
+		sh autogen.sh
+		./configure
+		make
+		sudo make install
+		echo "Master version of tmux has been installed"
+		cd ..
+	fi
 	ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 fi
 
