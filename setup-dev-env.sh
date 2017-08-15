@@ -38,6 +38,12 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 	ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 fi
 
+if [ ! -f "$HOME/.ssh/rc" ]; then
+	echo "if test \"\$SSH_AUTH_SOCK\" ; then" >> $HOME/.ssh/rc
+	echo "  ln -sf \$SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock" >> $HOME/.ssh/rc
+	echo "fi" >> $HOME/.ssh/rc
+fi
+
 if ! which rustc; then
 	curl https://sh.rustup.rs -sSf | sh
 fi
