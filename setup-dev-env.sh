@@ -96,3 +96,8 @@ if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
 	git config --global diff.submodule log
 	git config --global status.submodulesummary 1
 fi
+
+if [ ! -d $HOME/.fzf ]; then
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	~/.fzf/install
+fi
