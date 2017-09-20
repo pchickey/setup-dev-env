@@ -33,7 +33,6 @@ export EDITOR=vim
 alias ls='ls -G -F -h'
 alias grep='grep --color=auto'
 alias rm='rm -v'
-alias vim='vim -p'
 
 topit() { /usr/bin/top -p `pgrep $1` }
 vimfind() { find -name $1 -exec vim -p {} + }
@@ -105,4 +104,8 @@ fi
 if [[ -f ~/.zsh/site-config ]]; then
   . ~/.zsh/site-config
 fi
+
+
+# fzf is a ctrl-r fuzzy search tool
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
