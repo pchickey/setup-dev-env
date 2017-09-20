@@ -51,6 +51,10 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 	ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 fi
 
+if [ ! -f "$HOME/.ssh/config" ]; then
+	echo "AddKeysToAgent yes" >> $HOME/.ssh/config
+fi
+
 if [ ! -f "$HOME/.ssh/rc" ]; then
 	echo "if test \"\$SSH_AUTH_SOCK\" ; then" >> $HOME/.ssh/rc
 	echo "  ln -sf \$SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock" >> $HOME/.ssh/rc
