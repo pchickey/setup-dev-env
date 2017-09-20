@@ -2,10 +2,12 @@
 set -e
 
 if [ "Darwin" == $(uname -s) ]; then
-	if [ ! -d /usr/local/Homebrew ]; then
-		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	if [ ! $1 == "--no-brew" ]; then
+		if [ ! -d /usr/local/Homebrew ]; then
+			/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		fi
+		brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool ninja
 	fi
-	brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool ninja
 elif [ $(which apt) ]; then
 	sudo apt install build-essential vim git tmux zsh clang curl cmake ninja-build autoconf pkg-config libevent-dev libncurses-dev
 else
