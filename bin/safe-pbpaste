@@ -1,0 +1,9 @@
+#! /usr/bin/env bash
+
+# if pbcopy is not available, try using xclip
+if [ -n "$(command -v which pbpaste)" ]; then
+  xclip -selection clipboard -o
+else
+  pbpaste
+fi
+
