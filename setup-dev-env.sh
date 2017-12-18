@@ -9,7 +9,7 @@ if [ "Darwin" == $(uname -s) ]; then
 		brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool ninja
 	fi
 elif [ $(which apt) ]; then
-	sudo apt install build-essential vim git tmux zsh clang curl cmake ninja-build autoconf pkg-config libevent-dev libncurses-dev
+	sudo apt install build-essential vim git tmux zsh clang curl cmake ninja-build autoconf pkg-config libevent-dev libncurses-dev dconf-tools
 else
 	echo "WARNING: Cannot automatically install your packages"
 fi
@@ -100,4 +100,8 @@ fi
 if [ ! -d $HOME/.fzf ]; then
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	~/.fzf/install
+fi
+
+if [ "Linux" == $(uname -s) ]; then
+	dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:nocaps']"
 fi
