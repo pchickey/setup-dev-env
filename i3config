@@ -116,6 +116,7 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -160,6 +161,8 @@ exec xrandr --output eDP-1 --primary
 exec setxkbmap -option ctrl:nocaps
 exec --no-startup-id nm-applet
 
+exec_always feh --bg-scale /home/pat/Pictures/background.jpg
+
 
 bindsym $mod+Escape exec i3lock -c 000000
 
@@ -170,4 +173,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 bindsym XF86MonBrightnessUp exec light -A 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec light -U 20 # decrease screen brightness
 
+# move workspace between monitors
+bindsym $mod+greater move workspace to output left
+bindsym $mod+less move workspace to output right
 
