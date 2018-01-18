@@ -1,5 +1,6 @@
 .*.swp
 .*.swo
+.*.rustfmt
 .cabal-sandbox
 cabal.sandbox.config
 *.o
