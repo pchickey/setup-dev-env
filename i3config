@@ -160,6 +160,7 @@ bar {
 exec xrandr --output eDP-1 --primary
 exec setxkbmap -option ctrl:nocaps
 exec --no-startup-id nm-applet
+exec syndaemon -i 0.5 -d
 
 exec_always feh --bg-scale /home/pat/Pictures/background.jpg
 
