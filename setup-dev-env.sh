@@ -9,7 +9,7 @@ if [ "Darwin" == $(uname -s) ]; then
 		brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool ninja tree
 	fi
 elif [ $(which apt) ]; then
-	sudo apt install build-essential vim git tmux zsh clang curl cmake ninja-build autoconf pkg-config libevent-dev libncurses-dev dconf-tools gitk tree
+	sudo apt install build-essential vim git tmux zsh clang curl cmake ninja-build autoconf pkg-config libevent-dev libncurses-dev dconf-tools gitk tree xclip arandr feh
 else
 	echo "WARNING: Cannot automatically install your packages"
 fi
