@@ -1,0 +1,18 @@
+#!/bin/sh
+# from https://stackoverflow.com/questions/41034635/idiomatic-transformations-for-string-str-vecu8-and-u8
+echo "&str    -> String  | String::from(s) or s.to_string() or s.to_owned()"
+echo "&str    -> &[u8]   | s.as_bytes()"
+echo "&str    -> Vec<u8> | s.as_bytes().to_owned()"
+echo "String  -> &str    | &s if possible* else s.as_str()"
+echo "String  -> &[u8]   | s.as_bytes()"
+echo "String  -> Vec<u8> | s.into_bytes()"
+echo "&[u8]   -> &str    | s.to_owned()"
+echo "&[u8]   -> String  | str::from_utf8(s).unwrap(), but don't**"
+echo "&[u8]   -> Vec<u8> | String::from_utf8(s).unwrap(), but don't**"
+echo "Vec<u8> -> &str    | &s if possible* else s.as_slice()"
+echo "Vec<u8> -> String  | std::from_utf8(&s).unwrap(), but don't**"
+echo "Vec<u8> -> &[u8]   | String::from_utf8(s).unwrap(), but don't**"
+echo ""
+echo "* target should have explicit type (i.e., checker can't infer that)"
+echo ""
+echo "** handle the error properly instead"
