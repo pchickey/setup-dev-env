@@ -180,3 +180,15 @@ bindsym XF86MonBrightnessDown exec light -U 20 # decrease screen brightness
 bindsym $mod+greater move workspace to output left
 bindsym $mod+less move workspace to output right
 
+bindsym Print exec scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures/'
+bindsym Control+Print exec gnome-screenshot -i
+
+set $display_mode Set display mode [l]aptop [o]ffice [h]ome
+bindsym $mod+d mode "$display_mode"
+mode "$display_mode" {
+	bindsym o exec "~/.dotfiles/bin/office-monitors"; mode "default"
+	bindsym l exec "~/.dotfiles/bin/laptop-monitor"; mode "default"
+	bindsym h exec "~/.dotfiles/bin/home-monitors"; mode "default"
+	bindsym Return exec "~/.dotfiles/bin/laptop-monitor"; mode "default"
+	bindsym Escape mode "default"
+}

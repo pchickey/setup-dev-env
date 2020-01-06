@@ -1,0 +1,7 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+  mode="check"
+else
+  mode="$@"
+fi
+cargo watch -c -s "cargo --color=always $mode 2>&1 | less -R"
