@@ -135,10 +135,14 @@ fi
 
 if [ ! -d $HOME/.fonts ]; then
 	mkdir -p $HOME/.fonts
+	curl -sSfLO https://download.jetbrains.com/fonts/JetBrainsMono-1.0.2.zip
+	unzip JetBrainsMono-1.0.2.zip
 	for f in $PWD/JetBrainsMono-1.0.2/ttf/*.ttf
 	do
-		ln -s $f $HOME/.fonts/$(basename "$f")
+		mv $f $HOME/.fonts/$(basename "$f")
 	done
+	rm -rf $PWD/JetBrainsMono-1.0.2
+	rm JetBrainsMono-1.0.2.zip
 	sudo fc-cache -f -v
 fi
 
