@@ -1,4 +1,5 @@
 
+
 set nocompatible            " disable compat with vi
 set showmatch               " show matching brackets
 set mouse=a                 " mouse support in all modes
@@ -33,7 +34,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 endif
 
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 " fzf plugin is installed via git
 Plug '~/.fzf'
