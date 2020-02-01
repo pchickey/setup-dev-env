@@ -53,6 +53,12 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 	ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
 fi
 
+
+if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
+	mkdir -p ~/.config/nvim
+	ln -s ~/.dotfiles/nvim/init.vim ~/.config/nvim/init.vim
+fi
+
 if [ ! -f "$HOME/.ssh/config" ]; then
 	echo "AddKeysToAgent yes" >> $HOME/.ssh/config
 fi
