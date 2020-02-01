@@ -1,2 +1,4 @@
 hosts
 tmux
+zsh/site-config
+*.swp
