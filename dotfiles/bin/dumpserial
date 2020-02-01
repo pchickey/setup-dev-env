@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DEVICE="${ISOTOPE_UART_DEVICE:-$1}"
+LOGFILE="${ISOTOPE_UART_LOG:-$2}"
+
+if [ -z ${DEVICE} ]; then
+    echo "Usage:  dump_serial.sh DEVICE [LOGFILE]"
+    echo "where DEVICE is e.g. /dev/cu.SLAB_USBtoUART"
+else
+    (stty speed 115200 raw; tee ${LOGFILE}) < ${DEVICE}
+fi

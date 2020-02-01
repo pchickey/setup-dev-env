@@ -1,0 +1,9 @@
+.*.swp
+.*.swo
+.*.rustfmt
+.cabal-sandbox
+cabal.sandbox.config
+*.o
+*.pyc
+.DS_Store
+*.dSYM
