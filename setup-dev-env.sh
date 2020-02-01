@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 sudo apt install \
 	build-essential \
@@ -56,8 +56,8 @@ fi
 
 
 if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
-	mkdir -p $HOME/.config/nvim
-	ln -s $PWD/dotfiles/nvim/init.vim ~/.config/nvim/init.vim
+	mkdir -p $HOME/.config
+	ln -s $PWD/dotfiles/nvim $HOME/.config/nvim
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then
@@ -71,7 +71,7 @@ if [ ! -f "$HOME/.ssh/rc" ]; then
 fi
 
 if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -sSf | sh -s -- -y
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 
 if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
@@ -128,5 +128,20 @@ if [ ! $(command -v alacritty) ]; then
 	sudo add-apt-repository ppa:mmstick76/alacritty
 	sudo apt update
 	sudo apt install alacritty
+	ln -s $PWD/dotfiles/alacritty $HOME/.config/alacritty
 fi
 
+if [ ! -d $HOME/.config/i3 ]; then
+	sudo apt install i3
+	ln -s $PWD/dotfiles/i3 $HOME/.config/i3
+fi
+
+
+if [ ! -d $HOME/.fonts ]; then
+	mkdir -p $HOME/.fonts
+	for f in $PWD/JetBrainsMono-1.0.2/ttf/*.ttf
+	do
+		ln -s $f $HOME/.fonts/$(basename "$f")
+	done
+	sudo fc-cache -f -v
+fi
