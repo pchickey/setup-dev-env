@@ -29,10 +29,6 @@ if [ ! -d "$HOME/.zsh" ]; then
 	ln -s $HOME/.zsh/zshrc $HOME/.zshrc
 fi
 
-if [ ! "$SHELL" == $(which zsh) ]; then
-	echo "Changing login shell to zsh"
-	chsh -s $(which zsh)
-fi
 
 
 if [ ! -f "$HOME/.tmux.conf" ]; then
@@ -144,4 +140,11 @@ if [ ! -d $HOME/.fonts ]; then
 		ln -s $f $HOME/.fonts/$(basename "$f")
 	done
 	sudo fc-cache -f -v
+fi
+
+if [ ! -f $PWD/nvim.appimage ]; then
+	curl -sSfLO https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage
+	chmod +x nvim.appimage
+	mkdir -p $HOME/.local/bin
+	ln -s $PWD/nvim.appimage $HOME/.local/bin/nvim
 fi

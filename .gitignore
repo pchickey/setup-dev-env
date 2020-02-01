@@ -1,4 +1,6 @@
 hosts
 tmux
-zsh/site-config
+dotfiles/zsh/site-config
+dotfiles/nvim/autoload
+nvim.appimage
 *.swp
