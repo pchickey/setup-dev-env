@@ -1,36 +1,33 @@
 #!/usr/bin/env bash
 set -e
 
-if [ "Darwin" == $(uname -s) ]; then
-	if [ ! $1 == "--no-brew" ]; then
-		if [ ! -d /usr/local/Homebrew ]; then
-			/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-		fi
-		brew install vim git tmux zsh curl reattach-to-user-namespace cmake libtool ninja tree
-	fi
-elif [ $(which apt) ]; then
-	sudo apt install build-essential vim git tmux zsh clang curl cmake ninja-build autoconf pkg-config libevent-dev libncurses-dev dconf-tools gitk tree xclip arandr feh
-else
-	echo "WARNING: Cannot automatically install your packages"
-fi
-
-
-if [ ! -d "$HOME/.dotfiles" ]; then
-	echo "Cloning private dotfiles directory. This now requires github keying to be setup"
-	git clone ssh://git@github.com/pchickey/dotfiles ~/.dotfiles
-fi
+sudo apt install \
+	build-essential \
+	vim \
+	git \
+	tmux \
+	zsh \
+	clang \
+	curl \
+	cmake \
+	ninja-build \
+	autoconf \
+	pkg-config \
+	libevent-dev \
+	libncurses-dev \
+	dconf-tools \
+	gitk \
+	tree \
+	xclip \
+	arandr \
+	feh
 
 if [ ! -d "$HOME/.zsh" ]; then
-	git clone ssh://git@github.com/pchickey/zsh-config ~/.zsh
-fi
-if [ ! -f "$HOME/.zshrc" ]; then
+	ln -s $(PWD)/zsh ~/.zsh
 	ln -s ~/.zsh/zshrc ~/.zshrc
 fi
+
 if [ ! "$SHELL" == $(which zsh) ]; then
-	if [ "Darwin" == $(uname -s) ]; then
-		echo "Adding brew installed zsh to list of acceptable shells"
-		sudo sh -c "echo '$(which zsh)' >> /etc/shells"
-	fi
 	echo "Changing login shell to zsh"
 	chsh -s $(which zsh)
 fi
@@ -42,21 +39,21 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 	else
 		echo "Incompatible version of tmux installed: " $(tmux -V)
 		git clone https://github.com/tmux/tmux.git
-		cd tmux
+		pushd tmux
 		sh autogen.sh
 		./configure
 		make
 		sudo make install
 		echo "Master version of tmux has been installed"
-		cd ..
+		popd
 	fi
-	ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
+	ln -s $(PWD)/dotfiles/tmux.conf $(HOME)/.tmux.conf
 fi
 
 
 if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
-	mkdir -p ~/.config/nvim
-	ln -s ~/.dotfiles/nvim/init.vim ~/.config/nvim/init.vim
+	mkdir -p $(HOME)/.config/nvim
+	ln -s $(PWD)/dotfiles/nvim/init.vim ~/.config/nvim/init.vim
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then
@@ -78,13 +75,21 @@ if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
 fi
 
 if [ ! -f  "$HOME/.cargo/bin/rustfmt" ] ; then
-	$HOME/.cargo/bin/cargo install rustfmt
+	$HOME/.cargo/bin/rustup component add rustfmt
 fi
 
-# Vim plugins depend on Rust stuff
-if [ ! -d "$HOME/.vim" ]; then
-	git clone git@github.com:pchickey/vim-config ~/.vim
-	cd ~/.vim && ./boot.sh
+if [ ! -f  "$HOME/.cargo/bin/rls" ] ; then
+	$HOME/.cargo/bin/rustup component add rls
+fi
+
+# LanguageClient-neovim depends on rust
+if [ ! -d "$HOME/src/LanguageClient-neovim" ]; then
+	mkdir -p $HOME/src
+	pushd $HOME/src
+	git clone https://github.com/autozimu/LanguageClient-neovim
+	cd LanguageClient-neovim
+	make release
+	popd
 fi
 
 if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
@@ -104,10 +109,10 @@ if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
 fi
 
 if [ ! -d $HOME/.fzf ]; then
+	pushd $HOME
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 	~/.fzf/install
+	popd
 fi
 
-if [ "Linux" == $(uname -s) ]; then
-	dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:nocaps']"
-fi
+dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:nocaps']"
