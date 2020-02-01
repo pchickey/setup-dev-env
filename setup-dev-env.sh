@@ -10,6 +10,8 @@ sudo apt install \
 	clang \
 	curl \
 	cmake \
+	bison \
+	flex \
 	ninja-build \
 	autoconf \
 	pkg-config \
@@ -23,8 +25,8 @@ sudo apt install \
 	feh
 
 if [ ! -d "$HOME/.zsh" ]; then
-	ln -s $(PWD)/zsh ~/.zsh
-	ln -s ~/.zsh/zshrc ~/.zshrc
+	ln -s $PWD/zsh $HOME/.zsh
+	ln -s $HOME/.zsh/zshrc $HOME/.zshrc
 fi
 
 if [ ! "$SHELL" == $(which zsh) ]; then
@@ -38,7 +40,9 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 		echo "Correct version of tmux installed, linking conf file"
 	else
 		echo "Incompatible version of tmux installed: " $(tmux -V)
-		git clone https://github.com/tmux/tmux.git
+		if [ ! -d "tmux" ]; then
+			git clone https://github.com/tmux/tmux.git
+		fi
 		pushd tmux
 		sh autogen.sh
 		./configure
@@ -47,13 +51,13 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 		echo "Master version of tmux has been installed"
 		popd
 	fi
-	ln -s $(PWD)/dotfiles/tmux.conf $(HOME)/.tmux.conf
+	ln -s $PWD/dotfiles/tmux.conf $HOME/.tmux.conf
 fi
 
 
 if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
-	mkdir -p $(HOME)/.config/nvim
-	ln -s $(PWD)/dotfiles/nvim/init.vim ~/.config/nvim/init.vim
+	mkdir -p $HOME/.config/nvim
+	ln -s $PWD/dotfiles/nvim/init.vim ~/.config/nvim/init.vim
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then
@@ -67,7 +71,7 @@ if [ ! -f "$HOME/.ssh/rc" ]; then
 fi
 
 if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
-	curl https://sh.rustup.rs -sSf | sh
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -sSf | sh -s -- -y
 fi
 
 if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
@@ -88,6 +92,7 @@ if [ ! -d "$HOME/src/LanguageClient-neovim" ]; then
 	pushd $HOME/src
 	git clone https://github.com/autozimu/LanguageClient-neovim
 	cd LanguageClient-neovim
+	export PATH=$HOME/.cargo/bin:$PATH
 	make release
 	popd
 fi
@@ -115,4 +120,13 @@ if [ ! -d $HOME/.fzf ]; then
 	popd
 fi
 
-dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:nocaps']"
+if [ $(command -v dconf) ]; then
+	dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:nocaps']"
+fi
+
+if [ ! $(command -v alacritty) ]; then
+	sudo add-apt-repository ppa:mmstick76/alacritty
+	sudo apt update
+	sudo apt install alacritty
+fi
+
