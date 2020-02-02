@@ -25,7 +25,7 @@ sudo apt install \
 	feh
 
 if [ ! -d "$HOME/.zsh" ]; then
-	ln -s $PWD/zsh $HOME/.zsh
+	ln -s $PWD/dotfiles/zsh $HOME/.zsh
 	ln -s $HOME/.zsh/zshrc $HOME/.zshrc
 fi
 
@@ -68,18 +68,13 @@ fi
 
 if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    export PATH=$HOME/.cargo/bin:$PATH
+	rustup component add rls --toolchain stable-x86_64-unknown-linux-gnu
+	rustup component add rustfmt
 fi
 
 if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
 	$HOME/.cargo/bin/cargo install ripgrep
-fi
-
-if [ ! -f  "$HOME/.cargo/bin/rustfmt" ] ; then
-	$HOME/.cargo/bin/rustup component add rustfmt
-fi
-
-if [ ! -f  "$HOME/.cargo/bin/rls" ] ; then
-	$HOME/.cargo/bin/rustup component add rls
 fi
 
 # LanguageClient-neovim depends on rust
@@ -185,3 +180,5 @@ if [ ! -d $HOME/src/wabt ]; then
     done
     popd
 fi
+
+
