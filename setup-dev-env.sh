@@ -116,9 +116,21 @@ if [ $(command -v dconf) ]; then
 fi
 
 if [ ! $(command -v alacritty) ]; then
-	sudo add-apt-repository ppa:mmstick76/alacritty
-	sudo apt update
-	sudo apt install alacritty
+    # For XPS 15 I ended up having to install from source
+	sudo apt install \
+        libfreetype6-dev \
+        libexpat1-dev \
+        libxcb1-dev \
+        libxcb-render0-dev \
+        libxcb-shape0-dev \
+        libxcb-xfixes0-dev
+    mkdir -p $HOME/src
+    pushd $HOME/src
+    git clone https://github.com/alacritty/alacritty
+    cd alacritty
+    cargo build --release
+    ln -s $PWD/target/release/alacritty $HOME/.local/bin/alacritty
+    popd
 	ln -s $PWD/dotfiles/alacritty $HOME/.config/alacritty
 fi
 
