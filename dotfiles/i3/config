@@ -164,9 +164,6 @@ exec setxkbmap -option ctrl:nocaps
 exec --no-startup-id nm-applet
 exec syndaemon -i 0.5 -d
 
-exec_always feh --bg-scale /home/pat/Pictures/background.jpg
-
-
 bindsym $mod+Escape exec i3lock -c 000000
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
