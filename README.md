@@ -34,3 +34,7 @@ I set the graphics to use intel:
 
 Additionally I determined that the dell 130W USB-C adapter is not compatible
 with my USB-C breakout adapter.
+
+To get double-finger click working as right-click, I had to install the synaptics driver:
+
+`sudo apt install xserver-xorg-input-synaptics-hwe-18.04`
