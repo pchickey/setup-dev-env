@@ -22,7 +22,8 @@ sudo apt install \
 	tree \
 	xclip \
 	arandr \
-	feh
+	feh \
+    scrot
 
 if [ ! -d "$HOME/.zsh" ]; then
 	ln -s $PWD/dotfiles/zsh $HOME/.zsh
@@ -139,6 +140,12 @@ if [ ! -d $HOME/.config/i3 ]; then
 	ln -s $PWD/dotfiles/i3 $HOME/.config/i3
 fi
 
+
+if [ ! -f /etc/systemd/system/i3lock.service ]; then
+    sudo ln -s $PWD/i3lock.service /etc/systemd/system/i3lock.service
+    ln -s $PWD/i3lock.sh $HOME/.local/bin/i3lock.sh
+    sudo systemctl enable i3lock.service
+fi
 
 if [ ! -d $HOME/.fonts ]; then
 	mkdir -p $HOME/.fonts
