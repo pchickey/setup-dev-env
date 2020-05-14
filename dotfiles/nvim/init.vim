@@ -12,6 +12,7 @@ set shiftwidth=4            " expand them 4 wide
 set autoindent              " indent new line same amount as current
 " set cc=80                   " 80 column border
 " au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1) " highlight past 80
+set textwidth=78            " format paragraphs to 78 cols with :gq
 filetype plugin indent on   " auto-indent depending on file type
 syntax on                   " syntax highlighting on
 set hidden                  " allow plugins to modify mult buffers (LC rename)
@@ -56,7 +57,7 @@ call plug#end()
 
 let g:LanguageClient_autoStart=1
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'], 
+    \ 'rust': ['rust-analyzer'],
     \  }
 nnoremap <silent> <Leader>k :call LanguageClient#textDocument_hover()<Enter>
 nnoremap <silent> <Leader>d :call LanguageClient#textDocument_definition()<Enter>
