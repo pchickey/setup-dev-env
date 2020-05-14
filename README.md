@@ -38,3 +38,24 @@ with my USB-C breakout adapter.
 To get double-finger click working as right-click, I had to install the synaptics driver:
 
 `sudo apt install xserver-xorg-input-synaptics-hwe-18.04`
+
+#### Zoom Woes
+
+To get zoom to work properly with i3 i needed to use `i3-gnome` for my window
+manager. I have no idea why this is required, but zoom works fine in gnome and
+hangs (at high duty cycle, 5 secondish period, before any inputs are handled
+or screen redraws) the entire window manager when using standalone i3.
+
+* https://github.com/zxgio/i3-gnome-ubuntu18.04
+
+I also ended up installing i3 4.18 from `sur5r`'s deb, versus the older one
+that is packaged by 18.04. This did not fix the problem on its own, but I
+didn't revert to the old i3 once my problems were solved.
+
+```
+$ /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2020.02.03_all.deb keyring.deb SHA256:c5dd35231930e3c8d6a9d9539c846023fe1a08e4b073ef0d2833acd815d80d48
+# dpkg -i ./keyring.deb
+# echo "deb https://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) universe" >> /etc/apt/sources.list.d/sur5r-i3.list
+# apt update
+# apt install i3
+```
