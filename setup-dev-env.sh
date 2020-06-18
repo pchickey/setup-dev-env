@@ -104,6 +104,11 @@ if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
 	git config --global diff.submodule log
 	git config --global status.submodulesummary 1
 fi
+if [ ! -d $HOME/.config/git/template ]; then
+    mkdir -p $HOME/.config/git/template
+    echo "ref: refs/heads/main" > $HOME/.config/git/template/HEAD
+    git config --global init.templateDir $HOME/.config/git/template
+fi
 
 if [ ! -d $HOME/.fzf ]; then
 	pushd $HOME
