@@ -103,6 +103,9 @@ if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
 	git config --global alias.co 'commit -v'
 	git config --global alias.l 'log --stat'
 	git config --global alias.last 'log -1 HEAD'
+	git config --global alias.sms 'submodule status --recursive'
+	git config --global alias.smu 'submodule update --init --recursive'
+	git config --global merge.conflictstyle 'diff3'
 	git config --global diff.submodule log
 	git config --global status.submodulesummary 1
 fi
