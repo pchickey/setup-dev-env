@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -ex
 
+mkdir -p $HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin
+
 sudo apt install \
 	build-essential \
 	vim \
@@ -17,7 +20,6 @@ sudo apt install \
 	pkg-config \
 	libevent-dev \
 	libncurses-dev \
-	dconf-tools \
 	gitk \
 	tree \
 	xclip \
@@ -129,7 +131,8 @@ if [ ! $(command -v alacritty) ]; then
         libxcb1-dev \
         libxcb-render0-dev \
         libxcb-shape0-dev \
-        libxcb-xfixes0-dev
+        libxcb-xfixes0-dev \
+	libfontconfig1-dev
     mkdir -p $HOME/src
     pushd $HOME/src
     git clone https://github.com/alacritty/alacritty
@@ -137,7 +140,7 @@ if [ ! $(command -v alacritty) ]; then
     cargo build --release
     ln -s $PWD/target/release/alacritty $HOME/.local/bin/alacritty
     popd
-	ln -s $PWD/dotfiles/alacritty $HOME/.config/alacritty
+    ln -s $PWD/dotfiles/alacritty $HOME/.config/alacritty
 fi
 
 if [ ! -d $HOME/.config/i3 ]; then
@@ -166,9 +169,8 @@ if [ ! -d $HOME/.fonts ]; then
 fi
 
 if [ ! -f $PWD/nvim.appimage ]; then
-	curl -sSfLO https://github.com/neovim/neovim/releases/download/v0.4.3/nvim.appimage
+	curl -sSfLO https://github.com/neovim/neovim/releases/download/v0.4.4/nvim.appimage
 	chmod +x nvim.appimage
-	mkdir -p $HOME/.local/bin
 	ln -s $PWD/nvim.appimage $HOME/.local/bin/nvim
 fi
 

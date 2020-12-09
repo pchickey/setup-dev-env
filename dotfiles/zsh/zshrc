@@ -33,7 +33,7 @@ export EDITOR=vim
 alias ls='ls -G -F -h'
 alias grep='grep --color=auto'
 alias rm='rm -v'
-alias vim='nvim'
+#alias vim='nvim'
 
 topit() { /usr/bin/top -p `pgrep $1` }
 vimfind() { find -name $1 -exec vim -p {} + }
