@@ -1,3 +1,7 @@
+## Zsh default shell
+
+chsh -s $(which zsh)
+
 ## XFCE4
 
 In Settings -> Session and Startup -> Application Autostart, add a "caps lock to
