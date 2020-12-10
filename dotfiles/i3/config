@@ -159,7 +159,7 @@ bar {
         tray_output primary
 }
 
-exec xrandr --output eDP-1 --primary
+exec $HOME/.screenlayout/home.sh
 exec setxkbmap -option ctrl:nocaps
 exec --no-startup-id dbus-launch nm-applet
 
