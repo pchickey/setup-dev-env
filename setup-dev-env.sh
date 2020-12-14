@@ -31,7 +31,9 @@ if [ ! $(command -v make) ]; then
         arandr \
         feh \
         scrot \
-        imagemagick
+        imagemagick \
+        apt-transport-https \
+        gnupg-agent
 fi
 
 if [ ! -d "$HOME/.zsh" ]; then
@@ -235,4 +237,15 @@ if [ ! $(command -v sccache) ]; then
     echo "[build]" >> $HOME/.cargo/config
     echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
     echo "incremental = false" >> $HOME/.cargo/config
+fi
+
+if [ ! $(command -v docker) ]; then
+     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+     sudo add-apt-repository \
+       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+       $(lsb_release -cs) \
+       stable"
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io
+    sudo docker run hello-world
 fi
