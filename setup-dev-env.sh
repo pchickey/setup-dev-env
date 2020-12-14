@@ -28,7 +28,8 @@ if [ ! $(command -v make) ]; then
         xclip \
         arandr \
         feh \
-        scrot
+        scrot \
+        imagemagick
 fi
 
 if [ ! -d "$HOME/.zsh" ]; then
