@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
+SETUP_DEV_ENV_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 if [ ! -d "$HOME/.local/bin" ]; then
     mkdir -p $HOME/.local/bin
     export PATH=$PATH:$HOME/.local/bin
@@ -33,7 +35,7 @@ if [ ! $(command -v make) ]; then
 fi
 
 if [ ! -d "$HOME/.zsh" ]; then
-    ln -s $PWD/dotfiles/zsh $HOME/.zsh
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/zsh $HOME/.zsh
     ln -s $HOME/.zsh/zshrc $HOME/.zshrc
 fi
 
@@ -55,19 +57,19 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
         echo "Master version of tmux has been installed"
         popd
     fi
-    ln -s $PWD/dotfiles/tmux.conf $HOME/.tmux.conf
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/tmux.conf $HOME/.tmux.conf
 fi
 
-if [ ! -f $PWD/nvim.appimage ]; then
+if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
     curl -sSfLO https://github.com/neovim/neovim/releases/download/v0.4.4/nvim.appimage
     chmod +x nvim.appimage
-    ln -s $PWD/nvim.appimage $HOME/.local/bin/nvim
+    ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/nvim
 fi
 
 
 if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
     mkdir -p $HOME/.config
-    ln -s $PWD/dotfiles/nvim $HOME/.config/nvim
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/nvim $HOME/.config/nvim
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then
@@ -154,12 +156,12 @@ if [ ! $(command -v alacritty) ]; then
     cargo build --release
     ln -s $PWD/target/release/alacritty $HOME/.local/bin/alacritty
     popd
-    ln -s $PWD/dotfiles/alacritty $HOME/.config/alacritty
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/alacritty $HOME/.config/alacritty
 fi
 
 if [ ! -d $HOME/.config/i3 ]; then
     sudo apt install i3
-    ln -s $PWD/dotfiles/i3 $HOME/.config/i3
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/i3 $HOME/.config/i3
     if [ ! -d $HOME/.screenlayout ]; then
         mkdir $HOME/.screenlayout
         touch $HOME/.screenlayout/home.sh
@@ -169,8 +171,8 @@ fi
 
 
 if [ ! -f /etc/systemd/system/i3lock.service ]; then
-    sudo ln -s $PWD/i3lock.service /etc/systemd/system/i3lock.service
-    ln -s $PWD/i3lock.sh $HOME/.local/bin/i3lock.sh
+    sudo ln -s $SETUP_DEV_ENV_DIR/i3lock.service /etc/systemd/system/i3lock.service
+    ln -s $SETUP_DEV_ENV_DIR/i3lock.sh $HOME/.local/bin/i3lock.sh
     sudo systemctl enable i3lock.service
 fi
 
@@ -178,11 +180,11 @@ if [ ! -d $HOME/.fonts ]; then
     mkdir -p $HOME/.fonts
     curl -sSfLO https://download.jetbrains.com/fonts/JetBrainsMono-1.0.2.zip
     unzip JetBrainsMono-1.0.2.zip
-    for f in $PWD/JetBrainsMono-1.0.2/ttf/*.ttf
+    for f in $SETUP_DEV_ENV_DIR/JetBrainsMono-1.0.2/ttf/*.ttf
     do
         mv $f $HOME/.fonts/$(basename "$f")
     done
-    rm -rf $PWD/JetBrainsMono-1.0.2
+    rm -rf $SETUP_DEV_ENV_DIR/JetBrainsMono-1.0.2
     rm JetBrainsMono-1.0.2.zip
     sudo fc-cache -f -v
 fi
