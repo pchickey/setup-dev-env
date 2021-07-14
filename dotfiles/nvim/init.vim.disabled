@@ -13,6 +13,7 @@ set autoindent              " indent new line same amount as current
 " set cc=80                   " 80 column border
 " au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1) " highlight past 80
 set textwidth=78            " format paragraphs to 78 cols with :gq
+set formatoptions=cqj       " no t: dont auto format code, c: auto format comments, q: :gq works, j: remove comment leader when joining lines
 filetype plugin indent on   " auto-indent depending on file type
 syntax on                   " syntax highlighting on
 set hidden                  " allow plugins to modify mult buffers (LC rename)
@@ -26,13 +27,6 @@ nnoremap <Leader><Leader> :noh<Enter>
 
 " Highlight trailing spaces.
 set list lcs=tab:>-,trail:.
-
-" install plugin manager
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
 
 
 call plug#begin('~/.config/nvim/plugged')

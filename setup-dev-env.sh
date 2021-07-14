@@ -63,15 +63,20 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 fi
 
 if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
-    curl -sSfLO https://github.com/neovim/neovim/releases/download/v0.4.4/nvim.appimage
+    curl -sSfLO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
     chmod +x nvim.appimage
     ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/nvim
 fi
 
 
-if [ ! -f "$HOME/.config/nvim/init.vim" ]; then
+if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
     mkdir -p $HOME/.config
     ln -s $SETUP_DEV_ENV_DIR/dotfiles/nvim $HOME/.config/nvim
+fi
+
+if [ ! -d "$HOME/.local/share/nvim/site/pack/paqs/opt/paq-nvim" ]; then
+    git clone https://github.com/savq/paq-nvim.git \
+        $HOME/.local/share/nvim/site/pack/paqs/opt/paq-nvim
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then
@@ -93,17 +98,6 @@ fi
 
 if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
     $HOME/.cargo/bin/cargo install ripgrep
-fi
-
-# LanguageClient-neovim depends on rust
-if [ ! -d "$HOME/src/LanguageClient-neovim" ]; then
-    mkdir -p $HOME/src
-    pushd $HOME/src
-    git clone https://github.com/autozimu/LanguageClient-neovim
-    cd LanguageClient-neovim
-    export PATH=$HOME/.cargo/bin:$PATH
-    make release
-    popd
 fi
 
 if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
@@ -180,14 +174,13 @@ fi
 
 if [ ! -d $HOME/.fonts ]; then
     mkdir -p $HOME/.fonts
-    curl -sSfLO https://download.jetbrains.com/fonts/JetBrainsMono-1.0.2.zip
-    unzip JetBrainsMono-1.0.2.zip
-    for f in $SETUP_DEV_ENV_DIR/JetBrainsMono-1.0.2/ttf/*.ttf
+    curl -sSfLO https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/JetBrainsMono.zip
+    unzip JetBrainsMono.zip
+    for f in $SETUP_DEV_ENV_DIR/*.ttf
     do
-        mv $f $HOME/.fonts/$(basename "$f")
+        mv "$f" $HOME/.fonts/
     done
-    rm -rf $SETUP_DEV_ENV_DIR/JetBrainsMono-1.0.2
-    rm JetBrainsMono-1.0.2.zip
+    rm JetBrainsMono.zip
     sudo fc-cache -f -v
 fi
 
