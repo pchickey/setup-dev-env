@@ -63,7 +63,7 @@ if [ ! -f "$HOME/.tmux.conf" ]; then
 fi
 
 if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
-    curl -sSfLO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+    curl -sSfLO https://github.com/neovim/neovim/releases/download/v0.5.0/nvim.appimage
     chmod +x nvim.appimage
     ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/nvim
 fi
