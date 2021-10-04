@@ -5,10 +5,10 @@ SETUP_DEV_ENV_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && p
 
 if [ ! -d "$HOME/.local/bin" ]; then
     mkdir -p $HOME/.local/bin
-    export PATH=$PATH:$HOME/.local/bin
 fi
+export PATH=$PATH:$HOME/.local/bin
 
-if [ ! $(command -v make) ]; then
+if [ ! $(command -v xclip) ]; then
     sudo apt install \
         build-essential \
         vim \
@@ -95,6 +95,7 @@ if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
     rustup component add rustfmt
     rustup component add rust-src
 fi
+export PATH=$HOME/.cargo/bin:$PATH
 
 if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
     $HOME/.cargo/bin/cargo install ripgrep
@@ -144,7 +145,8 @@ if [ ! $(command -v alacritty) ]; then
         libxcb-render0-dev \
         libxcb-shape0-dev \
         libxcb-xfixes0-dev \
-    libfontconfig1-dev
+    	libfontconfig1-dev \
+    	libxkbcommon-dev
     mkdir -p $HOME/src
     pushd $HOME/src
     git clone https://github.com/alacritty/alacritty
