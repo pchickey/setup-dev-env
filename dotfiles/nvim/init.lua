@@ -76,7 +76,6 @@ local on_attach = function(client, bufnr)
 
 end
 
-nvim_lsp.rust_analyzer.setup{ on_attach = on_attach }
 
 
 paq {'junegunn/fzf', run = fn['fzf#install']}
@@ -90,3 +89,5 @@ paq {'kyazdani42/nvim-web-devicons'}
 paq {'ryanoasis/vim-devicons'}
 
 require('lualine').setup()
+
+nvim_lsp.rust_analyzer.setup{ on_attach = on_attach }
