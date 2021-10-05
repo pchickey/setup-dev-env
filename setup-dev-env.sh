@@ -77,6 +77,9 @@ fi
 if [ ! -d "$HOME/.local/share/nvim/site/pack/paqs/opt/paq-nvim" ]; then
     git clone https://github.com/savq/paq-nvim.git \
         $HOME/.local/share/nvim/site/pack/paqs/opt/paq-nvim
+    # run PaqInstall, with vim in silent (batch) mode so it exits
+    # afterwards
+    nvim -c PaqInstall -es
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then
