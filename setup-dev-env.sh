@@ -170,6 +170,9 @@ if [ ! -d $HOME/.config/i3 ]; then
     fi
 fi
 
+if [ ! -e $HOME/.local/bin/i3status_local ]; then
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/bin/i3status_local $HOME/.local/bin/i3status_local
+fi
 
 if [ ! -f /etc/systemd/system/i3lock.service ]; then
     sudo ln -s $SETUP_DEV_ENV_DIR/i3lock.service /etc/systemd/system/i3lock.service
