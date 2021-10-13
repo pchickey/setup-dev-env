@@ -7,3 +7,4 @@ cabal.sandbox.config
 *.pyc
 .DS_Store
 *.dSYM
+__pycache__

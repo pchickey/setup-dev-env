@@ -106,7 +106,10 @@ if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
     git config --global user.email "pat@moreproductive.org"
     git config --global push.default simple
     git config --global core.editor $(which vim)
-    git config --global core.excludesfile $HOME/.dotfiles/gitignore_global
+    if [ ! -f "$HOME/.gitignore" ]; then
+        ln -s $SETUP_DEV_ENV_DIR/dotfiles/gitignore_global $HOME/.gitignore
+    fi
+    git config --global core.excludesfile $HOME/.gitignore
     git config --global color.ui true
     git config --global log.decorate full
     git config --global alias.unstage 'reset HEAD --'
