@@ -57,6 +57,18 @@ paq {'jremmen/vim-ripgrep'}
 paq {'rust-lang/rust.vim'}
 g['rustfmt_autosave'] = 1
 
+paq {'junegunn/fzf', run = fn['fzf#install']}
+paq {'junegunn/fzf.vim'}
+paq {'ojroques/nvim-lspfuzzy'}
+
+require('lspfuzzy').setup{}
+
+paq {'hoob3rt/lualine.nvim'}
+paq {'kyazdani42/nvim-web-devicons'}
+paq {'ryanoasis/vim-devicons'}
+
+require('lualine').setup()
+
 paq {'neovim/nvim-lspconfig'}
 
 local nvim_lsp = require('lspconfig')
@@ -75,19 +87,16 @@ local on_attach = function(client, bufnr)
   mapcmd('<leader>i', 'vim.lsp.diagnostic.show_line_diagnostics()')
 
 end
-
-
-
-paq {'junegunn/fzf', run = fn['fzf#install']}
-paq {'junegunn/fzf.vim'}
-paq {'ojroques/nvim-lspfuzzy'}
-
-require('lspfuzzy').setup{}
-
-paq {'hoob3rt/lualine.nvim'}
-paq {'kyazdani42/nvim-web-devicons'}
-paq {'ryanoasis/vim-devicons'}
-
-require('lualine').setup()
-
-nvim_lsp.rust_analyzer.setup{ on_attach = on_attach }
+nvim_lsp.rust_analyzer.setup({
+    on_attach = on_attach,
+    settings = {
+        ["rust-analyzer"] = {
+            diagnostics = {
+                disabled = { "inactive-code" }
+            },
+            procMacro = {
+                enable = true
+            }
+        }
+    }
+})
