@@ -75,9 +75,9 @@ if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
     ln -s $SETUP_DEV_ENV_DIR/dotfiles/nvim $HOME/.config/nvim
 fi
 
-if [ ! -d "$HOME/.local/share/nvim/site/pack/paqs/opt/paq-nvim" ]; then
+if [ ! -d "$HOME/.local/share/nvim/site/pack/paqs/start/paq-nvim" ]; then
     git clone https://github.com/savq/paq-nvim.git \
-        $HOME/.local/share/nvim/site/pack/paqs/opt/paq-nvim
+        $HOME/.local/share/nvim/site/pack/paqs/start/paq-nvim
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then

@@ -43,33 +43,36 @@ opt('w', 'listchars', 'trail:·,tab:»·,nbsp:+')
 
 
 cmd 'packadd paq-nvim' -- load package manager
-local paq = require('paq-nvim').paq -- alias
-paq {'savq/paq-nvim', opt = true } -- paq manages itself
+require('paq') {
+  'savq/paq-nvim'; -- paq manages itself
 
-paq {'tpope/vim-markdown'}
-paq {'tpope/vim-fugitive'}
-paq {'tpope/vim-rhubarb'}
-paq {'fidian/hexmode'}
-paq {'rhysd/vim-wasm'}
-paq {'leafgarland/typescript-vim'}
-paq {'jremmen/vim-ripgrep'}
+  'tpope/vim-markdown';
+  'tpope/vim-fugitive';
+  'tpope/vim-rhubarb';
+  'fidian/hexmode';
+  'rhysd/vim-wasm';
+  'leafgarland/typescript-vim';
+  'jremmen/vim-ripgrep';
 
-paq {'rust-lang/rust.vim'}
+  'rust-lang/rust.vim';
+
+  {'junegunn/fzf', run = fn['fzf#install']};
+  'junegunn/fzf.vim';
+  'ojroques/nvim-lspfuzzy';
+
+
+  'hoob3rt/lualine.nvim';
+  'kyazdani42/nvim-web-devicons';
+  'ryanoasis/vim-devicons';
+
+
+  'neovim/nvim-lspconfig';
+  'simrat39/rust-tools.nvim';
+}
+
 g['rustfmt_autosave'] = 1
-
-paq {'junegunn/fzf', run = fn['fzf#install']}
-paq {'junegunn/fzf.vim'}
-paq {'ojroques/nvim-lspfuzzy'}
-
 require('lspfuzzy').setup{}
-
-paq {'hoob3rt/lualine.nvim'}
-paq {'kyazdani42/nvim-web-devicons'}
-paq {'ryanoasis/vim-devicons'}
-
 require('lualine').setup()
-
-paq {'neovim/nvim-lspconfig'}
 
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
