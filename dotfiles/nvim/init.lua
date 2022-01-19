@@ -32,6 +32,7 @@ cmd 'filetype plugin indent on'-- auto-indent depending on file type
 cmd 'syntax on'             -- syntax highlighting on
 cmd 'set hidden'            -- allow plugins to modify mult buffers (LC rename)
 cmd 'set title'             -- set window title
+cmd 'set nofixeol'          -- dont mess with eol
 
 g['mapleader'] = ';'
 -- clear highlighting with ;;
