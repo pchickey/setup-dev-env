@@ -95,6 +95,9 @@ nvim_lsp.rust_analyzer.setup({
     on_attach = on_attach,
     settings = {
         ["rust-analyzer"] = {
+            buildScripts = {
+                enable = true
+            },
             diagnostics = {
                 disabled = { "inactive-code" }
             },
