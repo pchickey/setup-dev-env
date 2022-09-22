@@ -93,6 +93,7 @@ local on_attach = function(client, bufnr)
 end
 nvim_lsp.rust_analyzer.setup({
     on_attach = on_attach,
+    cmd = { "rustup", "run", "stable", "rust-analyzer" },
     settings = {
         ["rust-analyzer"] = {
             buildScripts = {
