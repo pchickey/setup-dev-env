@@ -9,3 +9,4 @@ cabal.sandbox.config
 .DS_Store
 *.dSYM
 __pycache__
+.mypy_cache
