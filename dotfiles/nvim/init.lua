@@ -13,7 +13,6 @@ local function map(mode, lhs, rhs, opts)
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-cmd 'colorscheme default'
 
 local indent = 4
 opt('o', 'showmatch', true) -- show matching brackets
@@ -47,6 +46,8 @@ cmd 'packadd paq-nvim' -- load package manager
 require('paq') {
   'savq/paq-nvim'; -- paq manages itself
 
+  { 'nvim-treesitter/nvim-treesitter', run = cmd('normal TSUpdate') };
+
   'tpope/vim-markdown';
   'tpope/vim-fugitive';
   'tpope/vim-rhubarb';
@@ -61,19 +62,27 @@ require('paq') {
   'junegunn/fzf.vim';
   'ojroques/nvim-lspfuzzy';
 
-
   'hoob3rt/lualine.nvim';
   'kyazdani42/nvim-web-devicons';
   'ryanoasis/vim-devicons';
 
-
   'neovim/nvim-lspconfig';
   'simrat39/rust-tools.nvim';
+
+  'rebelot/kanagawa.nvim';
 }
 
 g['rustfmt_autosave'] = 1
 require('lspfuzzy').setup{}
 require('lualine').setup()
+require('kanagawa').setup { transparent = true }
+
+require('nvim-treesitter.configs').setup {
+    ensure_installed = { "bash", "c", "cpp", "javascript", "lua", "ruby", "rust", "typescript" },
+    highlight = { enable = true }
+}
+
+cmd 'colorscheme kanagawa'
 
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
