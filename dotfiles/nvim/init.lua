@@ -88,7 +88,8 @@ local on_attach = function(client, bufnr)
   mapcmd('<leader>d', 'vim.lsp.buf.definition()')
   mapcmd('<leader>x', 'vim.lsp.buf.references()')
   mapcmd('<leader>r', 'vim.lsp.buf.rename()')
-  mapcmd('<leader>i', 'vim.lsp.diagnostic.show_line_diagnostics()')
+  mapcmd('<leader>a', 'vim.lsp.buf.code_action()')
+  mapcmd('<leader>i', 'vim.diagnostic.open_float()')
 
 end
 nvim_lsp.rust_analyzer.setup({
