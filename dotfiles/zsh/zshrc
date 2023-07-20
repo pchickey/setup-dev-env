@@ -60,8 +60,8 @@ fi
 # prompt
 prompt trevor 014 blue red default yellow
 
-# cabal completion
-compdef -a _cabal cabal
+# wasm-tools completion
+compdef _gnu_generic wasm-tools
 
 # use the default dircolors, despite the awesome 256 color palette
 #eval `dircolors -b /etc/DIR_COLORS`
