@@ -8,34 +8,32 @@ if [ ! -d "$HOME/.local/bin" ]; then
 fi
 export PATH=$PATH:$HOME/.local/bin
 
-if [ ! $(command -v xclip) ]; then
-    sudo apt install \
-        build-essential \
-        vim \
-        git \
-        tmux \
-        zsh \
-        clang \
-        curl \
-        cmake \
-        bison \
-        flex \
-        ninja-build \
-        autoconf \
-        pkg-config \
-        libevent-dev \
-        libncurses-dev \
-        gitk \
-        tree \
-        xclip \
-        arandr \
-        feh \
-        scrot \
-        imagemagick \
-        apt-transport-https \
-        gnupg-agent \
-        jq
-fi
+sudo apt install \
+    build-essential \
+    vim \
+    git \
+    zsh \
+    clang \
+    curl \
+    cmake \
+    bison \
+    flex \
+    ninja-build \
+    autoconf \
+    pkg-config \
+    libevent-dev \
+    libncurses-dev \
+    gitk \
+    tree \
+    xclip \
+    arandr \
+    feh \
+    scrot \
+    imagemagick \
+    apt-transport-https \
+    gnupg-agent \
+    jq \
+    libfuse2
 
 if [ ! -d "$HOME/.zsh" ]; then
     ln -s $SETUP_DEV_ENV_DIR/dotfiles/zsh $HOME/.zsh
@@ -43,41 +41,15 @@ if [ ! -d "$HOME/.zsh" ]; then
 fi
 
 
-
-if [ ! -f "$HOME/.tmux.conf" ]; then
-    if [ "tmux 2.5" == $(tmux -V) ] || [ "tmux master" == $(tmux -V)] ; then
-        echo "Correct version of tmux installed, linking conf file"
-    else
-        echo "Incompatible version of tmux installed: " $(tmux -V)
-        if [ ! -d "tmux" ]; then
-            git clone https://github.com/tmux/tmux.git
-        fi
-        pushd tmux
-        sh autogen.sh
-        ./configure
-        make
-        sudo make install
-        echo "Master version of tmux has been installed"
-        popd
-    fi
-    ln -s $SETUP_DEV_ENV_DIR/dotfiles/tmux.conf $HOME/.tmux.conf
-fi
-
 if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
-    curl -sSfLO https://github.com/neovim/neovim/releases/download/v0.5.0/nvim.appimage
+    curl -sSfLO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
     chmod +x nvim.appimage
-    ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/nvim
+    ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/vim
 fi
-
 
 if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
     mkdir -p $HOME/.config
     ln -s $SETUP_DEV_ENV_DIR/dotfiles/nvim $HOME/.config/nvim
-fi
-
-if [ ! -d "$HOME/.local/share/nvim/site/pack/paqs/start/paq-nvim" ]; then
-    git clone https://github.com/savq/paq-nvim.git \
-        $HOME/.local/share/nvim/site/pack/paqs/start/paq-nvim
 fi
 
 if [ ! -f "$HOME/.ssh/config" ]; then
@@ -95,6 +67,7 @@ if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
     export PATH=$HOME/.cargo/bin:$PATH
     rustup component add rustfmt
     rustup component add rust-src
+    rustup component add rust-analyzer
 fi
 export PATH=$HOME/.cargo/bin:$PATH
 
@@ -196,7 +169,7 @@ fi
 if [ ! -d $HOME/src/binaryen ]; then
     mkdir -p $HOME/src
     pushd $HOME/src
-    git clone https://github.com/WebAssembly/binaryen
+    git clone --recursive https://github.com/WebAssembly/binaryen
     cd binaryen
     mkdir build
     cd build
@@ -226,19 +199,16 @@ if [ ! -d $HOME/src/wabt ]; then
 fi
 
 
-if [ ! $(command -v rust-analyzer) ]; then
-    curl -L https://github.com/rust-analyzer/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz | gunzip -c - > ~/.local/bin/rust-analyzer
-        -o $HOME/.local/bin/rust-analyzer
-    chmod +x $HOME/.local/bin/rust-analyzer
-fi
-
-
 if [ ! $(command -v sccache) ]; then
     sudo apt install libssl-dev
     cargo install sccache
     echo "[build]" >> $HOME/.cargo/config
     echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
     echo "incremental = false" >> $HOME/.cargo/config
+fi
+
+if [ ! $(command -v wasm-tools) ]; then
+    cargo install wasm-tools
 fi
 
 if [ ! $(command -v docker) ]; then
@@ -250,4 +220,10 @@ if [ ! $(command -v docker) ]; then
     sudo apt-get update
     sudo apt-get install docker-ce docker-ce-cli containerd.io
     sudo docker run hello-world
+fi
+
+
+if [ ! $(command -v google-chrome) ]; then
+    curl -fsSLO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt install ./google-chrome-stable_current_amd64.deb
 fi
