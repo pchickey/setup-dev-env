@@ -33,7 +33,6 @@ cmd 'set hidden'            -- allow plugins to modify mult buffers (LC rename)
 cmd 'set title'             -- set window title
 cmd 'set nofixeol'          -- dont mess with eol
 
-g['mapleader'] = ';'
 -- clear highlighting with ;;
 map('n', '<leader><leader>', '<cmd>noh<CR>') -- clear highlights
 
@@ -42,35 +41,48 @@ opt('w', 'list', true)
 opt('w', 'listchars', 'trail:·,tab:»·,nbsp:+')
 
 
-cmd 'packadd paq-nvim' -- load package manager
-require('paq') {
-  'savq/paq-nvim'; -- paq manages itself
+g['mapleader'] = ' '
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-  { 'nvim-treesitter/nvim-treesitter', run = cmd('normal TSUpdate') };
+require('lazy').setup({
 
-  'tpope/vim-markdown';
-  'tpope/vim-fugitive';
-  'tpope/vim-rhubarb';
-  'fidian/hexmode';
-  'rhysd/vim-wasm';
-  'leafgarland/typescript-vim';
-  'jremmen/vim-ripgrep';
+  { 'nvim-treesitter/nvim-treesitter', run = cmd('normal TSUpdate') },
 
-  'rust-lang/rust.vim';
+  'tpope/vim-markdown',
+  'tpope/vim-fugitive',
+  'tpope/vim-rhubarb',
+  'fidian/hexmode',
+  'rhysd/vim-wasm',
+  'leafgarland/typescript-vim',
+  'jremmen/vim-ripgrep',
 
-  {'junegunn/fzf', run = fn['fzf#install']};
-  'junegunn/fzf.vim';
-  'ojroques/nvim-lspfuzzy';
+  'rust-lang/rust.vim',
 
-  'hoob3rt/lualine.nvim';
-  'kyazdani42/nvim-web-devicons';
-  'ryanoasis/vim-devicons';
+  {'junegunn/fzf', run = fn['fzf#install']},
+  'junegunn/fzf.vim',
+  'ojroques/nvim-lspfuzzy',
 
-  'neovim/nvim-lspconfig';
-  'simrat39/rust-tools.nvim';
+  'hoob3rt/lualine.nvim',
+  'kyazdani42/nvim-web-devicons',
+  'ryanoasis/vim-devicons',
 
-  'rebelot/kanagawa.nvim';
-}
+  'neovim/nvim-lspconfig',
+  'simrat39/rust-tools.nvim',
+
+  'rebelot/kanagawa.nvim',
+})
+g['mapleader'] = ';'
 
 g['rustfmt_autosave'] = 1
 require('lspfuzzy').setup{}
