@@ -68,6 +68,8 @@ if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
     rustup component add rustfmt
     rustup component add rust-src
     rustup component add rust-analyzer
+    rustup target add wasm32-unknown-unknown
+    rustup target add wasm32-wasi
 fi
 export PATH=$HOME/.cargo/bin:$PATH
 
