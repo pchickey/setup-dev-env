@@ -1,0 +1,9 @@
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10.0
+
+[font.normal]
+family = "JetBrains Mono Nerd Font"
+style = "Regular"
