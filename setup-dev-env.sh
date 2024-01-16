@@ -217,6 +217,10 @@ if [ ! $(command -v wit-bindgen) ]; then
     cargo install wit-bindgen-cli
 fi
 
+if [ ! $(command -v wit-deps) ]; then
+    cargo install wit-deps-cli
+fi
+
 if [ ! $(command -v docker) ]; then
      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
      sudo add-apt-repository \
