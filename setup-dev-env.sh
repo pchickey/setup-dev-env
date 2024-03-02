@@ -8,7 +8,7 @@ if [ ! -d "$HOME/.local/bin" ]; then
 fi
 export PATH=$PATH:$HOME/.local/bin
 
-sudo apt install \
+sudo apt install -y \
     build-essential \
     vim \
     git \
@@ -117,7 +117,7 @@ fi
 
 if [ ! $(command -v alacritty) ]; then
     # For XPS 15 I ended up having to install from source
-    sudo apt install \
+    sudo apt install -y \
         libfreetype6-dev \
         libexpat1-dev \
         libxcb1-dev \
@@ -137,7 +137,7 @@ if [ ! $(command -v alacritty) ]; then
 fi
 
 if [ ! -d $HOME/.config/i3 ]; then
-    sudo apt install i3
+    sudo apt install -y i3
     ln -s $SETUP_DEV_ENV_DIR/dotfiles/i3 $HOME/.config/i3
     if [ ! -d $HOME/.screenlayout ]; then
         mkdir $HOME/.screenlayout
@@ -202,7 +202,7 @@ fi
 
 
 if [ ! $(command -v sccache) ]; then
-    sudo apt install libssl-dev
+    sudo apt install -y libssl-dev
     cargo install sccache
     echo "[build]" >> $HOME/.cargo/config
     echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
@@ -235,5 +235,7 @@ fi
 
 if [ ! $(command -v google-chrome) ]; then
     curl -fsSLO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install ./google-chrome-stable_current_amd64.deb
+    # no idea why, but _apt user needs to be able to write for install to succeed
+    chmod o+rw google-chrome-stable_current_amd64.deb
+    sudo apt install -y ./google-chrome-stable_current_amd64.deb
 fi
