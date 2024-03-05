@@ -107,6 +107,12 @@ if [ ! -f "/usr/local/bin/mold" ] ; then
     cmake --build . -j $(nproc)
     sudo cmake --build . --target install
     popd
+
+    NATIVE=$(rustc -vV | sed -n 's|host: ||p')
+    echo "[target.${NATIVE}]" >> $HOME/.cargo/config
+    echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config
+    echo "rustflags = [\"-C\", \"link-arg=--ld-path=/usr/local/bin/mold\"]" >> $HOME/.cargo/config
+
 fi
 
 if [ ! -d $HOME/.fzf ]; then
