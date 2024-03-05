@@ -67,10 +67,6 @@ if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
 fi
 export PATH=$HOME/.cargo/bin:$PATH
 
-if [ ! -f "$HOME/.cargo/bin/rg" ] ; then
-    $HOME/.cargo/bin/cargo install ripgrep
-fi
-
 if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
     git config --global user.name "Pat Hickey"
     git config --global user.email "pat@moreproductive.org"
@@ -159,6 +155,10 @@ if [ ! $(command -v sccache) ]; then
     echo "[build]" >> $HOME/.cargo/config
     echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
     echo "incremental = false" >> $HOME/.cargo/config
+fi
+
+if [ ! $(command -v rg) ] ; then
+    cargo install ripgrep
 fi
 
 if [ ! $(command -v wasm-tools) ]; then
