@@ -4,3 +4,4 @@ dotfiles/zsh/site-config
 nvim.appimage
 *.swp
 *.deb
+mold
