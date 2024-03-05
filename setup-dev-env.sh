@@ -36,7 +36,12 @@ fi
 
 
 if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
-    curl -sSfLO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    if [[ $(uname -p) == "aarch64" ]]; then
+        # i hope this is legit??
+        curl -sSfL https://github.com/matsuu/neovim-aarch64-appimage/releases/download/v0.9.4/nvim-v0.9.4-aarch64.appimage -o nvim.appimage
+    else
+        curl -sSfLO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    fi
     chmod +x nvim.appimage
     ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/vim
 fi
