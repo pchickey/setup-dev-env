@@ -98,6 +98,21 @@ if [ ! -d $HOME/.config/git/template ]; then
     git config --global init.templateDir $HOME/.config/git/template
 fi
 
+if [ ! -f "/usr/local/bin/mold" ] ; then
+    # contents of provided install-build-deps, invoked here manually so im not
+    # running sudo on their shell script
+    sudo apt install -y gcc g++ g++-10
+    # remainder of instructions are out of mold's readme:
+    git clone https://github.com/rui314/mold.git
+    mkdir mold/build
+    pushd mold/build
+    git checkout v2.4.1
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ..
+    cmake --build . -j $(nproc)
+    sudo cmake --build . --target install
+    popd
+fi
+
 if [ ! -d $HOME/.fzf ]; then
     pushd $HOME
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
