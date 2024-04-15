@@ -8,26 +8,28 @@ if [ ! -d "$HOME/.local/bin" ]; then
 fi
 export PATH=$PATH:$HOME/.local/bin
 
-sudo apt install -y \
-    build-essential \
-    vim \
-    git \
-    zsh \
-    clang \
-    curl \
-    cmake \
-    bison \
-    flex \
-    ninja-build \
-    autoconf \
-    pkg-config \
-    libevent-dev \
-    libncurses-dev \
-    tree \
-    apt-transport-https \
-    gnupg-agent \
-    jq \
-    libfuse2
+if [[ $(uname) == "Linux" ]]; then
+    sudo apt install -y \
+        build-essential \
+        vim \
+        git \
+        zsh \
+        clang \
+        curl \
+        cmake \
+        bison \
+       flex \
+        ninja-build \
+        autoconf \
+        pkg-config \
+        libevent-dev \
+        libncurses-dev \
+        tree \
+        apt-transport-https \
+        gnupg-agent \
+        jq \
+        libfuse2
+fi
 
 if [ ! -d "$HOME/.zsh" ]; then
     ln -s $SETUP_DEV_ENV_DIR/dotfiles/zsh $HOME/.zsh
@@ -35,15 +37,17 @@ if [ ! -d "$HOME/.zsh" ]; then
 fi
 
 
-if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
-    if [[ $(uname -p) == "aarch64" ]]; then
-        # i hope this is legit??
-        curl -sSfL https://github.com/matsuu/neovim-aarch64-appimage/releases/download/v0.9.4/nvim-v0.9.4-aarch64.appimage -o nvim.appimage
-    else
-        curl -sSfLO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+if [[ $(uname) == "Linux" ]]; then
+    if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
+        if [[ $(uname -p) == "aarch64" ]]; then
+            # i hope this is legit??
+            curl -sSfL https://github.com/matsuu/neovim-aarch64-appimage/releases/download/v0.9.4/nvim-v0.9.4-aarch64.appimage -o nvim.appimage
+        else
+            curl -sSfLO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+        fi
+        chmod +x nvim.appimage
+        ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/vim
     fi
-    chmod +x nvim.appimage
-    ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/vim
 fi
 
 if [ ! -f "$HOME/.config/nvim/init.lua" ]; then
@@ -99,25 +103,27 @@ if [ ! -d $HOME/.config/git/template ]; then
     git config --global init.templateDir $HOME/.config/git/template
 fi
 
-if [ ! -f "/usr/local/bin/mold" ] ; then
-    # contents of provided install-build-deps, invoked here manually so im not
-    # running sudo on their shell script
-    sudo apt install -y gcc g++ g++-10
-    # remainder of instructions are out of mold's readme:
-    git clone https://github.com/rui314/mold.git
-    mkdir mold/build
-    pushd mold/build
-    git checkout v2.4.1
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ..
-    cmake --build . -j $(nproc)
-    sudo cmake --build . --target install
-    popd
+if [[ $(uname) == "Linux" ]]; then
+    if [ ! -f "/usr/local/bin/mold" ] ; then
+        # contents of provided install-build-deps, invoked here manually so im not
+        # running sudo on their shell script
+        sudo apt install -y gcc g++ g++-10
+        # remainder of instructions are out of mold's readme:
+        git clone https://github.com/rui314/mold.git
+        mkdir mold/build
+        pushd mold/build
+        git checkout v2.4.1
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ..
+        cmake --build . -j $(nproc)
+        sudo cmake --build . --target install
+        popd
 
-    NATIVE=$(rustc -vV | sed -n 's|host: ||p')
-    echo "[target.${NATIVE}]" >> $HOME/.cargo/config
-    echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config
-    echo "rustflags = [\"-C\", \"link-arg=--ld-path=/usr/local/bin/mold\"]" >> $HOME/.cargo/config
+        NATIVE=$(rustc -vV | sed -n 's|host: ||p')
+        echo "[target.${NATIVE}]" >> $HOME/.cargo/config
+        echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config
+        echo "rustflags = [\"-C\", \"link-arg=--ld-path=/usr/local/bin/mold\"]" >> $HOME/.cargo/config
 
+    fi
 fi
 
 if [ ! -d $HOME/.fzf ]; then
@@ -127,45 +133,49 @@ if [ ! -d $HOME/.fzf ]; then
     popd
 fi
 
-if [ ! -d $HOME/src/binaryen ]; then
-    mkdir -p $HOME/src
-    pushd $HOME/src
-    git clone --recursive https://github.com/WebAssembly/binaryen
-    cd binaryen
-    mkdir build
-    cd build
-    cmake -G Ninja ..
-    ninja
-    for f in $HOME/src/binaryen/build/bin/*
-    do
-        ln -s $f $HOME/.local/bin/$(basename "$f")
-    done
-    popd
+if [[ $(uname) == "Linux" ]]; then
+    # FIXME: these could be built on mac too, but i dont have cmake & ninja
+    if [ ! -d $HOME/src/binaryen ]; then
+        mkdir -p $HOME/src
+        pushd $HOME/src
+        git clone --recursive https://github.com/WebAssembly/binaryen
+        cd binaryen
+        mkdir build
+        cd build
+        cmake -G Ninja ..
+        ninja
+        for f in $HOME/src/binaryen/build/bin/*
+        do
+            ln -s $f $HOME/.local/bin/$(basename "$f")
+        done
+        popd
+    fi
+
+    if [ ! -d $HOME/src/wabt ]; then
+        mkdir -p $HOME/src
+        pushd $HOME/src
+        git clone --recursive https://github.com/WebAssembly/wabt
+        cd wabt
+        mkdir build
+        cd build
+        cmake -G Ninja ..
+        ninja
+        for f in wasm2wat wat2wasm wasm-objdump
+        do
+            ln -s $PWD/$f $HOME/.local/bin/$f
+        done
+        popd
+    fi
 fi
 
-if [ ! -d $HOME/src/wabt ]; then
-    mkdir -p $HOME/src
-    pushd $HOME/src
-    git clone --recursive https://github.com/WebAssembly/wabt
-    cd wabt
-    mkdir build
-    cd build
-    cmake -G Ninja ..
-    ninja
-    for f in wasm2wat wat2wasm wasm-objdump
-    do
-        ln -s $PWD/$f $HOME/.local/bin/$f
-    done
-    popd
-fi
-
-
-if [ ! $(command -v sccache) ]; then
-    sudo apt install -y libssl-dev
-    cargo install sccache
-    echo "[build]" >> $HOME/.cargo/config
-    echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
-    echo "incremental = false" >> $HOME/.cargo/config
+if [[ $(uname) == "Linux" ]]; then
+    if [ ! $(command -v sccache) ]; then
+        sudo apt install -y libssl-dev
+        cargo install sccache
+        echo "[build]" >> $HOME/.cargo/config
+        echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
+        echo "incremental = false" >> $HOME/.cargo/config
+    fi
 fi
 
 if [ ! $(command -v rg) ] ; then
@@ -184,13 +194,15 @@ if [ ! $(command -v wit-deps) ]; then
     cargo install wit-deps-cli
 fi
 
-if [ ! $(command -v docker) ]; then
-     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-     sudo add-apt-repository \
-       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-       $(lsb_release -cs) \
-       stable"
-    sudo apt-get update
-    sudo apt-get install docker-ce docker-ce-cli containerd.io
-    sudo docker run hello-world
+if [[ $(uname) == "Linux" ]]; then
+    if [ ! $(command -v docker) ]; then
+         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+         sudo add-apt-repository \
+           "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+           $(lsb_release -cs) \
+           stable"
+        sudo apt-get update
+        sudo apt-get install docker-ce docker-ce-cli containerd.io
+        sudo docker run hello-world
+    fi
 fi
