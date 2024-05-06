@@ -73,7 +73,7 @@ require('lazy').setup({
   'junegunn/fzf.vim',
   'ojroques/nvim-lspfuzzy',
 
-  'hoob3rt/lualine.nvim',
+  { 'hoob3rt/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
   'kyazdani42/nvim-web-devicons',
   'ryanoasis/vim-devicons',
 

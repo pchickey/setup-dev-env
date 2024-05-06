@@ -27,7 +27,8 @@ colors
 spectrum
 promptinit
 
-export EDITOR=vim
+alias vim='nvim'
+export EDITOR=nvim
 
 # Aliases
 alias ls='ls -G -F -h'
