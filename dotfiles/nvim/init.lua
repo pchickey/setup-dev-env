@@ -57,7 +57,19 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 
-  { 'nvim-treesitter/nvim-treesitter', run = cmd('normal TSUpdate') },
+  { 'nvim-treesitter/nvim-treesitter',
+    build = ":TSUpdate",
+    config = function ()
+        local configs = require("nvim-treesitter.configs")
+
+        configs.setup({
+            ensure_installed = { "bash", "c", "cpp", "javascript", "lua", "ruby", "rust", "typescript" },
+            sync_install = false,
+            highlight = { enable = true },
+            indent = { enable = true },  
+        })
+    end
+  },
 
   'tpope/vim-markdown',
   'tpope/vim-fugitive',
@@ -88,11 +100,6 @@ g['rustfmt_autosave'] = 1
 require('lspfuzzy').setup{}
 require('lualine').setup()
 require('kanagawa').setup { transparent = true }
-
-require('nvim-treesitter.configs').setup {
-    ensure_installed = { "bash", "c", "cpp", "javascript", "lua", "ruby", "rust", "typescript" },
-    highlight = { enable = true }
-}
 
 cmd 'colorscheme kanagawa'
 
