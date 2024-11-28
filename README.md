@@ -4,7 +4,7 @@ An shell script to set up my own prefered development tools and dotfiles.
 
 ## Compatibility
 
-Works on Ubuntu 22.04.
+Works on macos, at the moment
 
 ## Manual steps
 
