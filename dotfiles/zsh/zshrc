@@ -37,9 +37,6 @@ alias rm='rm -v'
 # these guys are canceled but i still like alien lanes
 alias gbv='git branch -vv'
 
-topit() { /usr/bin/top -p `pgrep $1` }
-vimfind() { find -name $1 -exec vim -p {} + }
-
 if [[ $TERM == "dumb" ]] ; then
   alias ls='ls --color=none'
 else
@@ -66,23 +63,6 @@ compdef _gnu_generic wasm-tools
 # use the default dircolors, despite the awesome 256 color palette
 #eval `dircolors -b /etc/DIR_COLORS`
 
-SSH_ENV="$HOME/.ssh/environment"
-function start_agent {
-  echo "Initialising new SSH agent..."
-  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-  echo succeeded
-  chmod 600 "${SSH_ENV}"
-  . "${SSH_ENV}" > /dev/null
-}
-
-if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" > /dev/null
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-    start_agent;
-  }
-else
-  start_agent;
-fi
 
 if [[ -d /usr/local/bin ]]; then
   export PATH=/usr/local/bin:$PATH
@@ -98,11 +78,6 @@ if [[ -d ~/.local/bin ]]; then
   export PATH=$HOME/.local/bin:$PATH
 fi
 
-# add dotfiles bin to path, if exists
-if [[ -d ~/.dotfiles/bin ]]; then
-  export PATH=$HOME/.dotfiles/bin:$PATH
-fi
-
 # load in local config, if available
 if [[ -f ~/.zsh/site-config ]]; then
   . ~/.zsh/site-config
@@ -112,3 +87,22 @@ fi
 # fzf is a ctrl-r fuzzy search tool
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# setup ssh agent. do this after site config in case homebrew installed
+# ssh-agent.
+SSH_ENV="$HOME/.ssh/environment"
+function start_agent {
+  echo "Initialising new SSH agent..."
+  ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+  echo succeeded
+  chmod 600 "${SSH_ENV}"
+  . "${SSH_ENV}" > /dev/null
+}
+
+if [ -f "${SSH_ENV}" ]; then
+  . "${SSH_ENV}" > /dev/null
+  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    start_agent;
+  }
+else
+  start_agent;
+fi
