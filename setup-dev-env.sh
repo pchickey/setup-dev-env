@@ -137,39 +137,47 @@ if [ ! -d $HOME/.fzf ]; then
     popd
 fi
 
-if [[ $(uname) == "Linux" ]]; then
-    # FIXME: these could be built on mac too, but i dont have cmake & ninja
-    if [ ! -d $HOME/src/binaryen ]; then
-        mkdir -p $HOME/src
-        pushd $HOME/src
-        git clone --recursive https://github.com/WebAssembly/binaryen
-        cd binaryen
-        mkdir build
-        cd build
-        cmake -G Ninja ..
-        ninja
-        for f in $HOME/src/binaryen/build/bin/*
-        do
-            ln -s $f $HOME/.local/bin/$(basename "$f")
-        done
-        popd
+if [ ! $(command -v cmake) ]; then
+    if [[ $(uname) == "Darwin" ]]; then
+        brew install cmake
     fi
+fi
 
-    if [ ! -d $HOME/src/wabt ]; then
-        mkdir -p $HOME/src
-        pushd $HOME/src
-        git clone --recursive https://github.com/WebAssembly/wabt
-        cd wabt
-        mkdir build
-        cd build
-        cmake -G Ninja ..
-        ninja
-        for f in wasm2wat wat2wasm wasm-objdump
-        do
-            ln -s $PWD/$f $HOME/.local/bin/$f
-        done
-        popd
+if [ ! $(command -v ninja) ]; then
+    if [[ $(uname) == "Darwin" ]]; then
+        brew install ninja
     fi
+fi
+if [ ! -d $HOME/src/binaryen ]; then
+    mkdir -p $HOME/src
+    pushd $HOME/src
+    git clone --recursive https://github.com/WebAssembly/binaryen
+    cd binaryen
+    mkdir build
+    cd build
+    cmake -G Ninja ..
+    ninja
+    for f in $HOME/src/binaryen/build/bin/*
+    do
+        ln -s $f $HOME/.local/bin/$(basename "$f")
+    done
+    popd
+fi
+
+if [ ! -d $HOME/src/wabt ]; then
+    mkdir -p $HOME/src
+    pushd $HOME/src
+    git clone --recursive https://github.com/WebAssembly/wabt
+    cd wabt
+    mkdir build
+    cd build
+    cmake -G Ninja ..
+    ninja
+    for f in wasm2wat wat2wasm wasm-objdump
+    do
+        ln -s $PWD/$f $HOME/.local/bin/$f
+    done
+    popd
 fi
 
 if [ ! $(command -v sccache) ]; then
