@@ -76,7 +76,7 @@ if [ ! -f "$HOME/.cargo/bin/rustc" ] ; then
 fi
 export PATH=$HOME/.cargo/bin:$PATH
 
-if [[ ! $(git config --global user.email) == "pat@moreproductive.org" ]]; then
+if [[ ! $(git config --global user.name) == "Pat Hickey" ]]; then
     git config --global user.name "Pat Hickey"
     git config --global user.email "pat@moreproductive.org"
     git config --global push.default simple
@@ -103,8 +103,8 @@ if [ ! -d $HOME/.config/git/template ]; then
     git config --global init.templateDir $HOME/.config/git/template
 fi
 
-if [[ $(uname) == "Linux" ]]; then
-    if [ ! -f "/usr/local/bin/mold" ] ; then
+if [ ! $(command -v mold) ] ; then
+    if [[ $(uname) == "Linux" ]]; then
         # contents of provided install-build-deps, invoked here manually so im not
         # running sudo on their shell script
         sudo apt install -y gcc g++ g++-10
@@ -117,13 +117,17 @@ if [[ $(uname) == "Linux" ]]; then
         cmake --build . -j $(nproc)
         sudo cmake --build . --target install
         popd
-
-        NATIVE=$(rustc -vV | sed -n 's|host: ||p')
-        echo "[target.${NATIVE}]" >> $HOME/.cargo/config
-        echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config
-        echo "rustflags = [\"-C\", \"link-arg=--ld-path=/usr/local/bin/mold\"]" >> $HOME/.cargo/config
-
+        MOLD=/usr/local/bin/mold
+    else
+        brew install mold
+        MOLD=$(which mold)
     fi
+
+    NATIVE=$(rustc -vV | sed -n 's|host: ||p')
+    echo "[target.${NATIVE}]" >> $HOME/.cargo/config
+    echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config
+    echo "rustflags = [\"-C\", \"link-arg=--ld-path=$MOLD\"]" >> $HOME/.cargo/config
+
 fi
 
 if [ ! -d $HOME/.fzf ]; then
@@ -168,14 +172,14 @@ if [[ $(uname) == "Linux" ]]; then
     fi
 fi
 
-if [[ $(uname) == "Linux" ]]; then
-    if [ ! $(command -v sccache) ]; then
+if [ ! $(command -v sccache) ]; then
+    if [[ $(uname) == "Linux" ]]; then
         sudo apt install -y libssl-dev
-        cargo install sccache
-        echo "[build]" >> $HOME/.cargo/config
-        echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
-        echo "incremental = false" >> $HOME/.cargo/config
     fi
+    cargo install sccache
+    echo "[build]" >> $HOME/.cargo/config
+    echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
+    echo "incremental = false" >> $HOME/.cargo/config
 fi
 
 if [ ! $(command -v rg) ] ; then
