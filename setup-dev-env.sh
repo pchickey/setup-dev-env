@@ -124,9 +124,9 @@ if [ ! $(command -v mold) ] ; then
     fi
 
     NATIVE=$(rustc -vV | sed -n 's|host: ||p')
-    echo "[target.${NATIVE}]" >> $HOME/.cargo/config
-    echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config
-    echo "rustflags = [\"-C\", \"link-arg=--ld-path=$MOLD\"]" >> $HOME/.cargo/config
+    echo "[target.${NATIVE}]" >> $HOME/.cargo/config.toml
+    echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config.toml
+    echo "rustflags = [\"-C\", \"link-arg=--ld-path=$MOLD\"]" >> $HOME/.cargo/config.toml
 
 fi
 
@@ -185,9 +185,9 @@ if [ ! $(command -v sccache) ]; then
         sudo apt install -y libssl-dev
     fi
     cargo install sccache
-    echo "[build]" >> $HOME/.cargo/config
-    echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config
-    echo "incremental = false" >> $HOME/.cargo/config
+    echo "[build]" >> $HOME/.cargo/config.toml
+    echo "rustc-wrapper = \"$HOME/.cargo/bin/sccache\"" >> $HOME/.cargo/config.toml
+    echo "incremental = false" >> $HOME/.cargo/config.toml
 fi
 
 if [ ! $(command -v rg) ] ; then
