@@ -104,6 +104,7 @@ if [ ! -d $HOME/.config/git/template ]; then
 fi
 
 if [ ! $(command -v mold) ] ; then
+    # mold only supports linux
     if [[ $(uname) == "Linux" ]]; then
         # contents of provided install-build-deps, invoked here manually so im not
         # running sudo on their shell script
@@ -118,16 +119,12 @@ if [ ! $(command -v mold) ] ; then
         sudo cmake --build . --target install
         popd
         MOLD=/usr/local/bin/mold
-    else
-        brew install mold
-        MOLD=$(which mold)
+
+        NATIVE=$(rustc -vV | sed -n 's|host: ||p')
+        echo "[target.${NATIVE}]" >> $HOME/.cargo/config.toml
+        echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config.toml
+        echo "rustflags = [\"-C\", \"link-arg=--ld-path=$MOLD\"]" >> $HOME/.cargo/config.toml
     fi
-
-    NATIVE=$(rustc -vV | sed -n 's|host: ||p')
-    echo "[target.${NATIVE}]" >> $HOME/.cargo/config.toml
-    echo "linker = \"/usr/bin/clang\"" >> $HOME/.cargo/config.toml
-    echo "rustflags = [\"-C\", \"link-arg=--ld-path=$MOLD\"]" >> $HOME/.cargo/config.toml
-
 fi
 
 if [ ! -d $HOME/.fzf ]; then
