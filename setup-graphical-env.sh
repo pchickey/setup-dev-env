@@ -10,30 +10,19 @@ sudo apt install -y \
     arandr \
     feh \
     scrot \
-    imagemagick
+    imagemagick \
+    gnupg \
+    pcsdcd \
+    scdaemon
 
 if [ $(command -v dconf) ]; then
     dconf write /org/gnome/desktop/input-sources/xkb-options "['ctrl:nocaps']"
 fi
 
 if [ ! $(command -v alacritty) ]; then
-    # For XPS 15 I ended up having to install from source
-    sudo apt install -y \
-        libfreetype6-dev \
-        libexpat1-dev \
-        libxcb1-dev \
-        libxcb-render0-dev \
-        libxcb-shape0-dev \
-        libxcb-xfixes0-dev \
-    	libfontconfig1-dev \
-    	libxkbcommon-dev
-    mkdir -p $HOME/src
-    pushd $HOME/src
-    git clone https://github.com/alacritty/alacritty
-    cd alacritty
-    cargo build --release
-    ln -s $PWD/target/release/alacritty $HOME/.local/bin/alacritty
-    popd
+    # deps per https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu
+    sudo apt install -y cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3
+    cargo install alacritty
     ln -s $SETUP_DEV_ENV_DIR/dotfiles/alacritty $HOME/.config/alacritty
 fi
 
