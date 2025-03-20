@@ -40,10 +40,9 @@ fi
 if [[ $(uname) == "Linux" ]]; then
     if [ ! -f $SETUP_DEV_ENV_DIR/nvim.appimage ]; then
         if [[ $(uname -p) == "aarch64" ]]; then
-            # i hope this is legit??
-            curl -sSfL https://github.com/matsuu/neovim-aarch64-appimage/releases/download/v0.9.4/nvim-v0.9.4-aarch64.appimage -o nvim.appimage
+            curl -sSfL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-arm64.appimage -o nvim.appimage
         else
-            curl -sSfLO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+            curl -sSfL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage -o nvim.appimage
         fi
         chmod +x nvim.appimage
         ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/vim
