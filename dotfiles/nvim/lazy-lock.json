@@ -11,6 +11,7 @@
   "nvim-web-devicons": { "branch": "master", "commit": "0eb18da56e2ba6ba24de7130a12bcc4e31ad11cb" },
   "rust-tools.nvim": { "branch": "master", "commit": "676187908a1ce35ffcd727c654ed68d851299d3e" },
   "rust.vim": { "branch": "master", "commit": "889b9a7515db477f4cb6808bef1769e53493c578" },
+  "tree-sitter-wit": { "branch": "main", "commit": "37bf43c7f11d2b4af7a78d98a19e6d5c2cf04ad2" },
   "typescript-vim": { "branch": "master", "commit": "8d169e16b5487771f6568125d4c63e6086e524d9" },
   "vim-devicons": { "branch": "master", "commit": "71f239af28b7214eebb60d4ea5bd040291fb7e33" },
   "vim-fugitive": { "branch": "master", "commit": "fcb4db52e7f65b95705aa58f0f2df1312c1f2df2" },

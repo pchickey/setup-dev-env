@@ -63,7 +63,7 @@ require('lazy').setup({
         local configs = require("nvim-treesitter.configs")
 
         configs.setup({
-            ensure_installed = { "bash", "c", "cpp", "javascript", "lua", "ruby", "rust", "typescript" },
+            ensure_installed = { "bash", "c", "cpp", "javascript", "lua", "ruby", "rust", "typescript", "wit" },
             sync_install = false,
             highlight = { enable = true },
             indent = { enable = true },  
@@ -92,6 +92,7 @@ require('lazy').setup({
   'neovim/nvim-lspconfig',
   'simrat39/rust-tools.nvim',
 
+  -- colorscheme:
   'rebelot/kanagawa.nvim',
 })
 g['mapleader'] = ';'
