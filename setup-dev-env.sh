@@ -48,7 +48,7 @@ if [[ $(uname) == "Linux" ]]; then
             curl -sSfL https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage -o nvim.appimage
         fi
         chmod +x nvim.appimage
-        ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/vim
+        ln -s $SETUP_DEV_ENV_DIR/nvim.appimage $HOME/.local/bin/nvim
     fi
 fi
 
