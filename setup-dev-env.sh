@@ -28,7 +28,10 @@ if [[ $(uname) == "Linux" ]]; then
         apt-transport-https \
         gnupg-agent \
         jq \
-        libfuse2
+        libfuse2 \
+        libpcre3-dev \
+        zlib1g-dev \
+        libxslt1-dev
 fi
 
 if [ ! -d "$HOME/.zsh" ]; then
