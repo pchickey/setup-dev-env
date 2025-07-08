@@ -80,6 +80,7 @@ require('lazy').setup({
   'jremmen/vim-ripgrep',
 
   'rust-lang/rust.vim',
+  { 'mrcjkb/rustaceanvim', version = '^6', lazy = false },
 
   {'junegunn/fzf', run = fn['fzf#install']},
   'junegunn/fzf.vim',
@@ -90,7 +91,6 @@ require('lazy').setup({
   'ryanoasis/vim-devicons',
 
   'neovim/nvim-lspconfig',
-  'simrat39/rust-tools.nvim',
 
   -- colorscheme:
   'rebelot/kanagawa.nvim',
