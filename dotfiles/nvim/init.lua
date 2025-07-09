@@ -104,6 +104,8 @@ require('kanagawa').setup { transparent = true }
 
 cmd 'colorscheme kanagawa'
 
+-- disabling at the moment because rustaceanvim conflicts:
+--[[
 local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
   local opts = {noremap = true, silent = true}
@@ -138,6 +140,7 @@ nvim_lsp.rust_analyzer.setup({
         }
     }
 })
+--]]
 
 -- rust-analyzer started giving these errors that nvim isnt handling correctly??? https://github.com/neovim/neovim/issues/30985
 for _, method in ipairs({ "textDocument/diagnostic", "workspace/diagnostic" }) do
