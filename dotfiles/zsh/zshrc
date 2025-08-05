@@ -54,9 +54,6 @@ else
   alias pbpaste='xclip -selection clipboard -o'
 fi
 
-# prompt
-prompt trevor 014 blue red default yellow
-
 # wasm-tools completion
 compdef _gnu_generic wasm-tools
 
@@ -83,6 +80,8 @@ if [[ -f ~/.zsh/site-config ]]; then
   . ~/.zsh/site-config
 fi
 
+# prompt
+prompt trevor ${PROMPT_PRIMARY:-'014'} blue red default yellow
 
 # fzf is a ctrl-r fuzzy search tool
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -99,11 +98,13 @@ function start_agent {
   . "${SSH_ENV}" > /dev/null
 }
 
-if [ -f "${SSH_ENV}" ]; then
-  . "${SSH_ENV}" > /dev/null
-  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-    start_agent;
-  }
-else
-  start_agent;
+if [[ -z "${DISABLE_SSH_AGENT}" ]]; then
+    if [ -f "${SSH_ENV}" ]; then
+      . "${SSH_ENV}" > /dev/null
+      ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+      }
+    else
+      start_agent;
+    fi
 fi
