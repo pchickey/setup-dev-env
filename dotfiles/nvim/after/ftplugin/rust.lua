@@ -48,11 +48,13 @@ vim.keymap.set(
   "n", 
   "<leader>i", 
   function()
-    vim.cmd.RustLsp('renderDiagnostic')
+    vim.cmd.RustLsp({'renderDiagnostic', 'current'})
   end,
   { silent = true, buffer = bufnr }
 )
 
+
+vim.cmd('set tw=78')
 
    --Enable completion triggered by <c-x><c-o>
 --[[
