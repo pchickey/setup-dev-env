@@ -97,50 +97,24 @@ require('lazy').setup({
 })
 g['mapleader'] = ';'
 
-g['rustfmt_autosave'] = 1
 require('lspfuzzy').setup{}
 require('lualine').setup()
 require('kanagawa').setup { transparent = true }
 
 cmd 'colorscheme kanagawa'
 
--- disabling at the moment because rustaceanvim conflicts:
---[[
-local nvim_lsp = require('lspconfig')
-local on_attach = function(client, bufnr)
-  local opts = {noremap = true, silent = true}
-  local function mapcmd(lhs, cmd) vim.api.nvim_buf_set_keymap(bufnr, 'n', lhs, "<cmd>lua " .. cmd .. "<CR>", opts) end
-  local function opt(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-   --Enable completion triggered by <c-x><c-o>
-  opt ('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  mapcmd('<leader>k', 'vim.lsp.buf.hover()')
-  mapcmd('<leader>d', 'vim.lsp.buf.definition()')
-  mapcmd('<leader>x', 'vim.lsp.buf.references()')
-  mapcmd('<leader>r', 'vim.lsp.buf.rename()')
-  mapcmd('<leader>a', 'vim.lsp.buf.code_action()')
-  mapcmd('<leader>i', 'vim.diagnostic.open_float()')
-
-end
-nvim_lsp.rust_analyzer.setup({
-    on_attach = on_attach,
-    cmd = { "rustup", "run", "stable", "rust-analyzer" },
-    settings = {
-        ["rust-analyzer"] = {
-            buildScripts = {
-                enable = true
-            },
-            diagnostics = {
-                disabled = { "inactive-code" },
-            },
-            procMacro = {
-                enable = true
-            },
-        }
-    }
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
+  callback = function(args)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = args.buf,
+      callback = function()
+        vim.lsp.buf.format {async = false, id = args.data.client_id }
+      end,
+    })
+  end
 })
---]]
+
 
 -- rust-analyzer started giving these errors that nvim isnt handling correctly??? https://github.com/neovim/neovim/issues/30985
 for _, method in ipairs({ "textDocument/diagnostic", "workspace/diagnostic" }) do
