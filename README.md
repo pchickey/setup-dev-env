@@ -89,8 +89,7 @@ gpg --edit-key (fingerprint) trust 5
 ### GPG sign git commits
 
 ```sh
-git config --global user.signingKey "C5BC91DE79BC375F"
-# git config --global user.signingKey "C7B2BB592C869901"
+git config --global user.signingKey "3B256A207B42CBF6"
 git config --global commit.gpgsign true
 git config --global gpg.program $(which gpg)
 ```
