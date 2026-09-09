@@ -67,8 +67,6 @@ vim.pack.add({
   'https://github.com/leafgarland/typescript-vim',
   'https://github.com/jremmen/vim-ripgrep',
 
-  { src = 'https://github.com/mrcjkb/rustaceanvim', version = vim.version.range('6') },
-
   'https://github.com/junegunn/fzf',
   'https://github.com/junegunn/fzf.vim',
   'https://github.com/ojroques/nvim-lspfuzzy',
@@ -78,6 +76,11 @@ vim.pack.add({
   'https://github.com/ryanoasis/vim-devicons',
 
   'https://github.com/neovim/nvim-lspconfig',
+  {
+    src = 'https://github.com/mrcjkb/rustaceanvim',
+    -- To avoid being surprised by breaking changes
+    version = vim.version.range('^9')
+  },
 
   -- colorscheme:
   'https://github.com/rebelot/kanagawa.nvim',
@@ -104,18 +107,6 @@ require('kanagawa').setup { transparent = true }
 
 
 cmd 'colorscheme kanagawa'
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp", { clear = true }),
-  callback = function(args)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = args.buf,
-      callback = function()
-        -- vim.lsp.buf.format {async = false, id = args.data.client_id }
-      end,
-    })
-  end
-})
 
 vim.g.rustaceanvim = {
   server = {

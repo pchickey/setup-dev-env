@@ -37,9 +37,9 @@
       "src": "https://github.com/kyazdani42/nvim-web-devicons"
     },
     "rustaceanvim": {
-      "rev": "88575b98bb9937fb9983ddec5e532b67e75ce677",
+      "rev": "9cb125de42c0256ed1bc1f9ded8d8f0381317a17",
       "src": "https://github.com/mrcjkb/rustaceanvim",
-      "version": "6.0.0 - 7.0.0"
+      "version": "9.0.0 - 10.0.0"
     },
     "typescript-vim": {
       "rev": "4740441db1e070ef8366c888c658000dd032e4cb",
