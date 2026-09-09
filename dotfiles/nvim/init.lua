@@ -32,6 +32,7 @@ cmd 'syntax on'             -- syntax highlighting on
 cmd 'set hidden'            -- allow plugins to modify mult buffers (LC rename)
 cmd 'set title'             -- set window title
 cmd 'set nofixeol'          -- dont mess with eol
+opt('o', 'autoread', true)  -- auto-reload buffers changed on disk (e.g. by cargo fmt)
 
 -- clear highlighting with ;;
 map('n', '<leader><leader>', '<cmd>noh<CR>') -- clear highlights
@@ -79,8 +80,7 @@ require('lazy').setup({
   'leafgarland/typescript-vim',
   'jremmen/vim-ripgrep',
 
-  'rust-lang/rust.vim',
-  { 'mrcjkb/rustaceanvim', version = '^6', lazy = false },
+  { 'mrcjkb/rustaceanvim', version = '^6', lazy = false, ft = "rust" },
 
   {'junegunn/fzf', run = fn['fzf#install']},
   'junegunn/fzf.vim',
@@ -109,7 +109,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = args.buf,
       callback = function()
-        vim.lsp.buf.format {async = false, id = args.data.client_id }
+        -- vim.lsp.buf.format {async = false, id = args.data.client_id }
       end,
     })
   end
@@ -124,7 +124,8 @@ vim.g.rustaceanvim = {
           loadOutDirsFromCheck = true,
           runBuildScripts = true,
         },
-        checkOnSave = { 
+        checkOnSave = true,
+        check = { 
           allFeatures = true,
           command = 'clippy',
           extraArgs = { '--no-deps' },
