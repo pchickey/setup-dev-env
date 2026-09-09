@@ -1,5 +1,4 @@
 local cmd = vim.cmd
-local fn = vim.fn
 local g = vim.g
 
 local function opt(scope, key, value)
@@ -43,63 +42,66 @@ opt('w', 'listchars', 'trail:·,tab:»·,nbsp:+')
 
 
 g['mapleader'] = ' '
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
 
-require('lazy').setup({
-
-  { 'nvim-treesitter/nvim-treesitter',
-    build = ":TSUpdate",
-    config = function ()
-        local configs = require("nvim-treesitter.configs")
-
-        configs.setup({
-            ensure_installed = { "bash", "c", "cpp", "javascript", "lua", "ruby", "rust", "typescript", "wit" },
-            sync_install = false,
-            highlight = { enable = true },
-            indent = { enable = true },  
-        })
+-- Run post-install/update hooks that lazy.nvim used to run via `build`/`run`.
+-- Must be registered before the first `vim.pack.add()` call so it also
+-- fires for fresh installs.
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'fzf' and (kind == 'install' or kind == 'update') then
+      vim.system({ ev.data.path .. '/install', '--bin' })
     end
-  },
+  end,
+})
 
-  'tpope/vim-markdown',
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
-  'fidian/hexmode',
-  'rhysd/vim-wasm',
-  'leafgarland/typescript-vim',
-  'jremmen/vim-ripgrep',
+vim.pack.add({
+  -- 'main' branch: the only branch supported on Nvim >= 0.12.
+  'https://github.com/nvim-treesitter/nvim-treesitter',
 
-  { 'mrcjkb/rustaceanvim', version = '^6', lazy = false, ft = "rust" },
+  'https://github.com/tpope/vim-markdown',
+  'https://github.com/tpope/vim-fugitive',
+  'https://github.com/tpope/vim-rhubarb',
+  'https://github.com/fidian/hexmode',
+  'https://github.com/rhysd/vim-wasm',
+  'https://github.com/leafgarland/typescript-vim',
+  'https://github.com/jremmen/vim-ripgrep',
 
-  {'junegunn/fzf', run = fn['fzf#install']},
-  'junegunn/fzf.vim',
-  'ojroques/nvim-lspfuzzy',
+  { src = 'https://github.com/mrcjkb/rustaceanvim', version = vim.version.range('6') },
 
-  { 'hoob3rt/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons' } },
-  'kyazdani42/nvim-web-devicons',
-  'ryanoasis/vim-devicons',
+  'https://github.com/junegunn/fzf',
+  'https://github.com/junegunn/fzf.vim',
+  'https://github.com/ojroques/nvim-lspfuzzy',
 
-  'neovim/nvim-lspconfig',
+  'https://github.com/hoob3rt/lualine.nvim',
+  'https://github.com/kyazdani42/nvim-web-devicons',
+  'https://github.com/ryanoasis/vim-devicons',
+
+  'https://github.com/neovim/nvim-lspconfig',
 
   -- colorscheme:
-  'rebelot/kanagawa.nvim',
+  'https://github.com/rebelot/kanagawa.nvim',
+}, { load = true })
+
+-- nvim-treesitter's `main` branch dropped the old `nvim-treesitter.configs`
+-- setup API; parsers are installed explicitly and features (highlight,
+-- indent) are enabled per-filetype via autocommands instead.
+local ts_langs = { "bash", "c", "cpp", "javascript", "lua", "ruby", "rust", "typescript", "wit" }
+require('nvim-treesitter').install(ts_langs)
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = ts_langs,
+  callback = function()
+    pcall(vim.treesitter.start)
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
 })
+
 g['mapleader'] = ';'
 
 require('lspfuzzy').setup{}
 require('lualine').setup()
 require('kanagawa').setup { transparent = true }
+
 
 cmd 'colorscheme kanagawa'
 

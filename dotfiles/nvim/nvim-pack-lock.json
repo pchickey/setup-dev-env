@@ -1,0 +1,73 @@
+{
+  "plugins": {
+    "fzf": {
+      "rev": "63e82a9e3dd52cc67a46db842b8a29e0c1f83229",
+      "src": "https://github.com/junegunn/fzf"
+    },
+    "fzf.vim": {
+      "rev": "8a0068127ac9ee23d71dab2944ce995726bef462",
+      "src": "https://github.com/junegunn/fzf.vim"
+    },
+    "hexmode": {
+      "rev": "550cae65fdbd06d61d757dc6fe5a9be5be2e3ef4",
+      "src": "https://github.com/fidian/hexmode"
+    },
+    "kanagawa.nvim": {
+      "rev": "bb85e4bfc8d89b0e62c8fa53ccdd13d12e2f77b3",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
+    },
+    "lualine.nvim": {
+      "rev": "221ce6b2d999187044529f49da6554a92f740a96",
+      "src": "https://github.com/hoob3rt/lualine.nvim"
+    },
+    "nvim-lspconfig": {
+      "rev": "84b6b6c3f13cb34a6c8a0354b0da4c67d8ccf867",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-lspfuzzy": {
+      "rev": "cd51aecb511d773226d8148124c708e636742457",
+      "src": "https://github.com/ojroques/nvim-lspfuzzy"
+    },
+    "nvim-treesitter": {
+      "rev": "5cb0114e6242625db56dd6440e945ed1ece10bc7",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "nvim-web-devicons": {
+      "rev": "5f032a85be210cd1c6ac98861eb3b187ff3bd5eb",
+      "src": "https://github.com/kyazdani42/nvim-web-devicons"
+    },
+    "rustaceanvim": {
+      "rev": "88575b98bb9937fb9983ddec5e532b67e75ce677",
+      "src": "https://github.com/mrcjkb/rustaceanvim",
+      "version": "6.0.0 - 7.0.0"
+    },
+    "typescript-vim": {
+      "rev": "4740441db1e070ef8366c888c658000dd032e4cb",
+      "src": "https://github.com/leafgarland/typescript-vim"
+    },
+    "vim-devicons": {
+      "rev": "71f239af28b7214eebb60d4ea5bd040291fb7e33",
+      "src": "https://github.com/ryanoasis/vim-devicons"
+    },
+    "vim-fugitive": {
+      "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
+      "src": "https://github.com/tpope/vim-fugitive"
+    },
+    "vim-markdown": {
+      "rev": "f9f845f28f4da33a7655accb22f4ad21f7d9fb66",
+      "src": "https://github.com/tpope/vim-markdown"
+    },
+    "vim-rhubarb": {
+      "rev": "5496d7c94581c4c9ad7430357449bb57fc59f501",
+      "src": "https://github.com/tpope/vim-rhubarb"
+    },
+    "vim-ripgrep": {
+      "rev": "2bb2425387b449a0cd65a54ceb85e123d7a320b8",
+      "src": "https://github.com/jremmen/vim-ripgrep"
+    },
+    "vim-wasm": {
+      "rev": "8ee107a8c2034ef2b195fc82214ed2b4530a99b6",
+      "src": "https://github.com/rhysd/vim-wasm"
+    }
+  }
+}
