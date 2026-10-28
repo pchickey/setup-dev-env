@@ -218,3 +218,9 @@ if [[ $(uname) == "Linux" ]]; then
         sudo docker run hello-world
     fi
 fi
+
+
+if [ ! -f "$HOME/.config/AGENTS.md" ]; then
+    mkdir -p $HOME/.config
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/AGENTS.md $HOME/.config/AGENTS.md
+fi
