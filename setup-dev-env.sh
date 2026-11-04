@@ -220,7 +220,7 @@ if [[ $(uname) == "Linux" ]]; then
 fi
 
 
-if [ ! -f "$HOME/.config/AGENTS.md" ]; then
-    mkdir -p $HOME/.config
-    ln -s $SETUP_DEV_ENV_DIR/dotfiles/AGENTS.md $HOME/.config/AGENTS.md
+if [ ! -f "$HOME/.claude/AGENTS.md" ]; then
+    mkdir -p $HOME/.claude
+    ln -s $SETUP_DEV_ENV_DIR/dotfiles/AGENTS.md $HOME/.claude/AGENTS.md
 fi
