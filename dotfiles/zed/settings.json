@@ -1,0 +1,93 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "agent_servers": {
+    "claude-acp": {
+      "default_config_options": {
+        "mode": "plan",
+        "model": "opus",
+        "fast": false
+      },
+      "type": "registry"
+    }
+  },
+  "language_models": {
+    "openai_compatible": {
+      "F5AI": {
+        "api_url": "https://f5ai.pd.f5net.com/openai/v1",
+        "available_models": [
+          {
+            "name": "claude-opus-5-5",
+            "max_tokens": 1000000,
+            "max_output_tokens": 128000,
+            "max_completion_tokens": 20000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": true,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "edit_predictions": {
+    "provider": "open_ai_compatible_api",
+    "open_ai_compatible_api": {
+      "prediction_debounce": 100,
+      "max_output_tokens": 500,
+      "model": "claude-sonnet-5-5",
+      "api_url": "https://f5ai.pd.f5net.com/openai/v1"
+    }
+  },
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "vim_mode": true,
+  "base_keymap": "VSCode",
+  "ui_font_size": 16.0,
+  "buffer_font_size": 14.0,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Ayu Dark"
+  },
+  "languages": {
+    "Rust": {
+      "formatter": "language_server",
+      "format_on_save": "on"
+    },
+    "JSON": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+    },
+    "JSONC": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+    }
+  }
+}
