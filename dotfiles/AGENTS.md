@@ -9,6 +9,9 @@ By default, do not create issues, PRs, or commit messages yourself, always ask
 for human intervention. You can suggest a `gh` command for a human to execute
 to create issues or PRs.
 
+Never comment on, review, label, react to, or otherwise write to issues or PRs
+on GitHub (or any other forge). Reading them is fine.
+
 Expect that I will edit the code output by the LLM frequently, and without
 telling you explicitly. Expect that I will create commits whenever I see the
 progress is worth saving, and that I will iterate on code with the agent and
@@ -41,6 +44,10 @@ that module.
 When you need to use temporary files, try not to use /tmp or ~ for these. If
 you're working in a git worktree, make a directory .claude/tmp and use that
 for any temporary storage needs.
+
+When testing the wasmtime-wasi-http crate, the p2::sync, p2::async_ and p3
+http_outbound_request_timeout tests will fail when run on my development
+laptop due to interactions with my corporate vpn. Ignore these failures.
 
 ## Docker containers and the corporate TLS proxy
 
