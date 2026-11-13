@@ -7,10 +7,12 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "diff_view_style": "split",
   "agent_servers": {
     "claude-acp": {
       "default_config_options": {
-        "mode": "plan",
+        "ultracode": true,
+        "mode": "auto",
         "model": "opus",
         "fast": false
       },
@@ -60,6 +62,7 @@
     "dock": "left"
   },
   "agent": {
+    "expand_terminal_card": false,
     "dock": "right",
     "favorite_models": [],
     "model_parameters": []
@@ -77,6 +80,9 @@
     "dark": "Ayu Dark"
   },
   "languages": {
+    "Perl": {
+      "enable_language_server": false
+    },
     "Rust": {
       "formatter": "language_server",
       "format_on_save": "on"
